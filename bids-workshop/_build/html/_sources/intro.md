@@ -1,11 +1,15 @@
-# Welcome to your Jupyter Book
+# Welcome to my BIDS Workshop!
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+I am Steven Meisler, a Postdoctoral Fellow at the University of Pennsylvania
+working in [Ted Satterthwaite's lab](http://pennlinc.io/)
 
-Check out the content pages bundled with this sample book to see more.
+I am preparing this workshop as part of my [ReproNim/INCF Fellowship](https://www.repronim.org/fellowship.html),
+but also because I really like helping people do neuroimaging better
+(and do not like seeing research done "wrong" or irreproducibly).
+
+This course is being taught in-person at the Ohio State University,
+and thus some code will be specific to their cluster, but the
+general process described here should work for practically any computing cluster!
 
 ```{tableofcontents}
 ```
