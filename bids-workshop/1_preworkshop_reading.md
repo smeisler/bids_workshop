@@ -1,5 +1,14 @@
 # Pre-Reading: Why is this important?
 
+One of the most frustrating things in research is being given access
+to a dataset, and having **no idea** what you are looking at.
+File names may be completely unintuitive, and even slight naming convention
+changes may render your favorite processing code useless.
+And that's just for __raw__ data! The preprocessed data may even have
+**weirder** names, and it may be completely unclear how these files were made.
+
+Enter BIDS (the Brain Imaging Data Structure).
+
 ## What i
 Whether you write your book's content in Jupyter Notebooks (`.ipynb`) or
 in regular markdown files (`.md`), you'll write in the same flavor of markdown
