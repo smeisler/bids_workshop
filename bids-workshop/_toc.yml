@@ -7,5 +7,5 @@ chapters:
 - file: 1_preworkshop_reading
 - file: 2_prepare_environment
 - file: 3_bids_conversion
-- file: notebooks
-- file: markdown-notebooks
+- file: 4_bids_curation
+- file: bibliography

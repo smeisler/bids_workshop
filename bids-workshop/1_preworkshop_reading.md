@@ -32,6 +32,3 @@ For example, fMRIPrep relies on the consistent organization of BIDS datasets to 
 - **Promotes Scientific Progress:** By making it easier to share, validate, and build upon existing work, BIDS helps accelerate discoveries that can benefit the broader field and, ultimately, public health.
 
 For further insights into the design and benefits of BIDS—and the evidence supporting standardized data formats in neuroimaging—consider {cite}`gorgolewski2016brain`, {cite}`gorgolewski2017bids`, and {cite}`poldrack2024past`. You can also refer to the [official BIDS specification](https://bids-specification.readthedocs.io/en/stable/).
-
-```{bibliography}
-```

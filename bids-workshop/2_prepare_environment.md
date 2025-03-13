@@ -53,7 +53,14 @@ pip install CuBIDS pydeface babs
 pip cache purge
 ```
 
-## 4. Build BIDS-Apps Containers
+## 4. Configure Git
+Since we will be using `git` tools, it is helpful to configure `git` now. That includes running the following two lines (replacing it with your information):
+```bash
+git config --global user.name "YOUR NAME"
+git config --global user.email "YOUR EMAIL"
+```
+
+## 5. Build BIDS-Apps Containers
 ```{note}
 Workshop participants can just use the conatiners I have already built. This is more for just your information, or other users. Keep in mind that the versions listed here may not be most up-to-date and you should be encouraged to use the most recent stable versions.
 ```
@@ -72,7 +79,7 @@ Now you are ready to go!
 Keep in mind you will need to `mamba activate workshop` whenever you are working on this entering a new terminal.
 ```
 
-## 5. Find the Shared Data
+## 6. Find the Shared Data
 ```{note}
 This is only available for the workshop participants. External users are encouraged to use their own data
 ```

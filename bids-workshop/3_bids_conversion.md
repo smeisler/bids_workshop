@@ -959,7 +959,7 @@ I have prepared the following example code for you to run the software which can
 You can run this with `bash ${SHARED_DATA_DIR}/ef_example/code/run_dcm2bids.sh`.
 
 ```{note}
-For this case, `BIDS` must be defined as an environment variable (e.g., with `export BIDS=.......`). Also, `dcm2bids` does take a decently long time, and I encourgae you to adapt this to be parallelized over your computing cluster. AI tools like ChatGPT tend to make easy work of this. It is how I made the script below, in fact!
+For this case, `BIDS` must be defined as an environment variable (e.g., with `export BIDS=.......`). Also, `dcm2bids` does take a decently long time, and I encourage you to adapt this to be parallelized over your computing cluster. AI tools like ChatGPT tend to make easy work of this. It is how I made the script below, in fact!
 ```
 
 ```bash
