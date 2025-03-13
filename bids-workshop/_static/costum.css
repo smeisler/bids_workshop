@@ -1,0 +1,5 @@
+/* custom.css */
+.highlight.scrollable pre {
+  overflow-x: auto;
+  white-space: nowrap;
+}
