@@ -8,4 +8,5 @@ chapters:
 - file: 2_prepare_environment
 - file: 3_bids_conversion
 - file: 4_bids_curation
+- file: 5_bids_apps
 - file: bibliography

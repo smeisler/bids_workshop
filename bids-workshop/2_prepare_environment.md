@@ -78,8 +78,10 @@ Now you are ready to go!
 ```{warning}
 Keep in mind you will need to `mamba activate workshop` whenever you are working on this entering a new terminal.
 ```
+## 6. Download a FreeSurfer license file.
+If you don't already have one, complete [this registration form](https://surfer.nmr.mgh.harvard.edu/registration.html) to get a FreeSurfer license file. Save it somewhere where you'll remember where you put it.
 
-## 6. Find the Shared Data
+## 7. Find the Shared Data
 ```{note}
 This is only available for the workshop participants. External users are encouraged to use their own data
 ```
