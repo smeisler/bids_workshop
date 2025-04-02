@@ -1,7 +1,7 @@
 # Step 1: Converting Dicoms to a BIDS Dataset
 One of the first steps in any BIDS-based neuroimaging workflow is converting your raw DICOM files into the standardized BIDS format. This step ensures that your data are organized in a consistent, predictable way, making downstream processing much more straightforward.
 
-For this, we will be using the Python-based software [dcm2bids](https://github.com/UNFmontreal/Dcm2Bids). This is one that I am particularly used to, works well, and is actively maintained. There are certainly alternatives though, such as [BIDSCoin](https://github.com/Donders-Institute/bidscoin) and [heudiconv](https://github.com/nipy/heudiconv) are also fine choices!
+For this, we will be using the Python-based software [dcm2bids](https://github.com/UNFmontreal/Dcm2Bids). This is one that I am particularly used to, works well, and is actively maintained. There are certainly alternatives though, such as [BIDSCoin](https://github.com/Donders-Institute/bidscoin) and [heudiconv](https://github.com/nipy/heudiconv), that are also fine choices!
 
 We have already installed `dcm2bids` and it's dependencies in to our computational environment earlier in [Step 0](2_prepare_environment.md#create-a-workshop-environment). However, it can also be run via an Apptainer/Docker container.
 

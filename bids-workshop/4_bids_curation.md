@@ -327,4 +327,9 @@ This dataset appears to be BIDS compatible.
 	If you have any questions, please post on https://neurostars.org/tags/bids.
 ```
 
+Now that this is all ready to go, we save one last time:
+```bash
+datalad save -d $BIDS -m "finished v1 curation"
+```
+
 If wanted to be *really* careful, we can create an exemplar dataset that has one subject per variant group to test our pipelines. That could be helpful for large datasets with several variants. But for our purposes, we will just proceed with processing everyone.

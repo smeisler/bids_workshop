@@ -38,7 +38,7 @@ mamba update --all
 Create a new environment (here named `workshop`, but you can name it anything) with the essential packages:
 
 ```bash
-mamba create -n workshop -c conda-forge pip dcm2bids dcm2niix git git-annex deno nano pydicom tree
+mamba create -n workshop -c conda-forge pip dcm2bids dcm2niix git git-annex deno nano pydicom tree apptainer
 ```
 After the environment is created, clean up the Mamba cache:
 
@@ -49,7 +49,7 @@ mamba clean --all
 Now we have to install some additional packages with `pip`.
 ```bash
 mamba activate workshop
-pip install CuBIDS pydeface babs
+pip install CuBIDS pydeface babs jinja2
 pip cache purge
 ```
 
@@ -68,7 +68,7 @@ To build the BIDS-Apps containers, we will use `apptainer`. Here is the code use
 ```bash
 apptainer build qsiprep-1.0.0.sif docker://pennlinc/qsiprep:1.0.0
 apptainer build qsirecon-1.0.0.sif docker://pennlinc/qsirecon:1.0.0
-apptainer build fmriprep-24.1.1.sif docker://nipreps/fmriprep:24.1.1
+apptainer build fmriprep-25.0.0.sif docker://nipreps/fmriprep:25.0.0
 apptainer build xcpd-0.10.6.sif docker://pennlinc/xcp_d:0.10.6
 apptainer cache clean
 ```
@@ -91,7 +91,4 @@ export SHARED_DATA_DIR="/path/to/shared_data"
 ```
 ```{warning}
 This will have to be defined again if you enter a new terminal.
-```
-```{note}
-This is only available for the workshop participants. External users are encouraged to use their own data.
 ```
