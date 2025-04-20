@@ -19,7 +19,7 @@ For this part of the workshop we will first deal with *pre*-processing data. Pos
 I have already built the containers needed for this workshop at `${SHARED_DATA_DIR}/containers/`. 
 ```bash
 ls ${SHARED_DATA_DIR}/containers/
-fmriprep-25.0.0.sif  qsiprep-1.0.0.sif  qsirecon-1.0.0.sif  xcpd-0.10.6.sif
+fmriprep-25.0.0.sif  qsiprep-1.0.1.sif  qsirecon-1.1.0.sif  xcpd-0.10.7.sif
 ```
 We will be version tracking these too, so we need to operate them with DataLad. Let's create a place for these conatiners to go, and enter that folder:
 ```bash
@@ -43,22 +43,22 @@ Do the same for the rest of the containers now.
 datalad create -D "qsiprep container" qsiprep-container
 cd qsiprep-container
 datalad containers-add \
-    --url ${SHARED_DATA_DIR}/containers/qsiprep-1.0.0.sif \
-    qsiprep-1-0-0
+    --url ${SHARED_DATA_DIR}/containers/qsiprep-1.0.1.sif \
+    qsiprep-1-0-1
 cd ../
 
 datalad create -D "xcpd container" xcpd-container
 cd xcpd-container
 datalad containers-add \
-    --url ${SHARED_DATA_DIR}/containers/xcpd-0.10.6.sif \
-    xcpd-0-10-6
+    --url ${SHARED_DATA_DIR}/containers/xcpd-0.10.7.sif \
+    xcpd-0-10-7
 cd ../
 
 datalad create -D "qsirecon container" qsirecon-container
 cd qsirecon-container
 datalad containers-add \
-    --url ${SHARED_DATA_DIR}/containers/qsirecon-1.0.0.sif \
-    qsirecon-1-0-0
+    --url ${SHARED_DATA_DIR}/containers/qsirecon-1.1.0.sif \
+    qsirecon-1-1-0
 cd ../
 ```
 
@@ -78,6 +78,16 @@ Now we have to tell `BABS` how we want to run the software. This will be compreh
 #   or be compatible to the BIDS App version you're using.
 #   Therefore, please change and tailor it for your case before use it!!!
 
+# Define the input datasets
+input_datasets:
+    BIDS:
+        required_files:
+            - "func/*_bold.nii*"
+            - "anat/*_T1w.nii*"
+        is_zipped: false
+        origin_url: "/users/PAS2965/smeisler/BIDS_Dataset_DataLad"
+        path_in_babs: inputs/data/BIDS
+
 # Files to be copied into the datalad dataset:
 imported_files:
     # Change original_path to the path to the file on your local machine
@@ -90,7 +100,6 @@ bids_app_args:
     --stop-on-first-crash: ""
     --fs-license-file: "code/license.txt"
     --output-spaces: "MNI152NLin2009cAsym:res-2"
-    --slice-time-ref: "start"
     --skip-bids-validation: ""
     -vv: ""
     --cifti-output: "91k"
@@ -104,6 +113,7 @@ singularity_args:
 
 # Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):
 #   This fMRIPrep version (25.0.0) generates two folders, 'fmriprep' and 'freesurfer'.
+all_results_in_one_zip: true
 zip_foldernames:
     fmriprep: "25-0-0" # folder 'fmriprep' will be zipped into 'sub-xx_(ses-yy_)fmriprep-25-0-0.zip'
 
@@ -126,12 +136,6 @@ script_preamble: |
 # Where to run the jobs:
 job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/fmriprep"
 
-# Below is to filter out subjects (or sessions). Only those with required files will be kept.
-required_files:
-    $INPUT_DATASET_#1:
-        - "func/*_bold.nii*"
-        - "anat/*_T1w.nii*"
-
 # Alert messages that might be found in log files of failed jobs:
 #   These messages may be helpful for debugging errors in failed jobs.
 alert_log_messages:
@@ -147,7 +151,7 @@ Workshop users will need to change the `#SBATCH --account=PAS2965` line to match
 ```
 
 ## Define TemplateFlow
-Many BIDS-Apps use a centralized collection of brain templates called [TemplateFlow](https://github.com/templateflow/templateflow) which is a DataLad dataset. Before running `babs-init`, we need to create a copy of this and tell `BABS` where to find it.
+Many BIDS-Apps use a centralized collection of brain templates called [TemplateFlow](https://github.com/templateflow/templateflow) which is a DataLad dataset. Before running `babs init`, we need to create a copy of this and tell `BABS` where to find it.
 ```bash
 cd $BABS
 datalad clone https://github.com/templateflow/templateflow.git
@@ -155,7 +159,7 @@ datalad siblings -d "$BABS/templateflow" enable -s public-s3
 export TEMPLATEFLOW_HOME=$BABS/templateflow
 ```
 
-## Run `babs-init`
+## Run `babs init`
 We can now create the BABS dataset in which we will run all of the processing with the following command (the following is an exmaple for `fmriprep`):
 ```{note}
 Make sure `BIDS` is still defined as the datalad BIDS dataset we created in the previous step!
@@ -164,7 +168,6 @@ Make sure `BIDS` is still defined as the datalad BIDS dataset we created in the 
 ```bash
 babs init \
 babs_fmriprep \
---datasets BIDS=$BIDS \
 --container_ds $BABS/containers_datalad/fmriprep-container/ \
 --container_name fmriprep-25-0-0 \
 --container_config $BABS/configs/fmriprep-25.0.0.yaml \
@@ -178,7 +181,7 @@ babs check-setup --project_root $BABS/babs_fmriprep --job_test
 ```
 
 ### Run a Test Job
-Now we can run a test job this with:
+We can submit all the subjects with
 ```bash
 babs submit --project-root $BABS/babs_fmriprep
 ```
@@ -187,11 +190,6 @@ babs submit --project-root $BABS/babs_fmriprep
 You should complete fMRIPrep before trying to `babs init` XCP_D, and similarly finish QSIPrep before starting with QSIRecon. Both XCP_D and QSIRecon rely on preprocessed data as inputs.
 ```
 You can use the `cat` command to look at the log outputs in `$BABS/babs_fmriprep/analysis/logs` to see progress of the run. More information on job monitoring and status are [here.](https://pennlinc-babs.readthedocs.io/en/stable/jobs.html#)
-
-We can submit all the remaining jobs with
-```bash
-babs-submit --project-root $BABS/babs_fmriprep --all
-```
 
 ### Try this yourself!
 Now try to do this for QSIPrep. You can borrow the `.yaml` configuration I have made if you are unfamiliar with QSIPrep command line arguents, but try to do the rest of the setup on your own. If you get stuck, an answer key is below:
@@ -202,9 +200,18 @@ Now try to do this for QSIPrep. You can borrow the `.yaml` configuration I have 
 ```bash
 # This is an example config yaml file for:
 #   BIDS App:         QSIPrep ("qsiprep")
-#   BIDS App version: 1.0.0
+#   BIDS App version: 1.0.1
 #   Task:             regular use
 #   Which system:     Slurm
+
+input_datasets:
+    BIDS:
+        required_files:
+            - "dwi/*_dwi.nii*"
+            - "anat/*_T1w.nii*"
+        is_zipped: false
+        origin_url: "/users/PAS2965/smeisler/BIDS_Dataset_DataLad"
+        path_in_babs: inputs/data/BIDS
 
 # Files to be copied into the datalad dataset:
 imported_files:
@@ -234,7 +241,7 @@ singularity_args:
 #   As fMRIPrep will use BIDS output layout, we need to ask BABS to create a folder 'qsiprep' to wrap all derivatives:
 all_results_in_one_zip: true
 zip_foldernames:
-    qsiprep: "1-0-0" # folder 'qsiprep' will be zipped into 'sub-xx_(ses-yy_)qsiprep-1-0-0.zip'
+    qsiprep: "1-0-1" # folder 'qsiprep' will be zipped into 'sub-xx_(ses-yy_)qsiprep-1-0-0.zip'
 
 # How much cluster resources it needs:
 cluster_resources:
@@ -254,12 +261,6 @@ script_preamble: |
 
 # Where to run the jobs:
 job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/qsiprep"
-
-# Below is to filter out subjects (or sessions). Only those with required files will be kept.
-required_files:
-    $INPUT_DATASET_#1:
-        - "dwi/*_dwi.nii*"
-        - "anat/*_T1w.nii*"
 ```
 </details>
 
@@ -269,14 +270,13 @@ required_files:
 ```bash
 babs init \
 babs_qsiprep \
---datasets BIDS=$BIDS \
 --container_ds $BABS/containers_datalad/qsiprep-container/ \
 --container_name qsiprep-1-0-0 \
 --container_config $BABS/configs/qsiprep-1.0.0.yaml \
 --processing_level subject \
 --queue slurm
 
-babs check-setup --project_root $BABS/babs_qsiprep --job_test
+babs check-setup $BABS/babs_qsiprep --job_test
 
 babs submit --project-root $BABS/babs_qsiprep
 ```

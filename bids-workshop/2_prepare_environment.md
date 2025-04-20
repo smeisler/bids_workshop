@@ -27,18 +27,17 @@ Follow the prompts when running `bash Miniforge3-Linux-x86_64.sh`, keeping in mi
 The `$(uname)` should not need to be adjusted, but if you’re on a different platform (e.g., macOS), adjust the `Linux` installer name accordingly.
 ```
 
-## 2. Update All Packages
 Update your packages to ensure you have the latest versions:
 
 ```bash
 mamba update --all
 ```
 
-## 3. Create a Workshop Environment
+## 2. Create a Workshop Environment
 Create a new environment (here named `workshop`, but you can name it anything) with the essential packages:
 
 ```bash
-mamba create -n workshop -c conda-forge pip dcm2bids dcm2niix git git-annex deno nano pydicom tree apptainer
+mamba create -n workshop -c conda-forge pip dcm2bids dcm2niix git git-annex deno nano pydicom tree apptainer "python<3.12"
 ```
 After the environment is created, clean up the Mamba cache:
 
@@ -53,23 +52,23 @@ pip install CuBIDS pydeface babs jinja2
 pip cache purge
 ```
 
-## 4. Configure Git
+## 3. Configure Git
 Since we will be using `git` tools, it is helpful to configure `git` now. That includes running the following two lines (replacing it with your information):
 ```bash
 git config --global user.name "YOUR NAME"
 git config --global user.email "YOUR EMAIL"
 ```
 
-## 5. Build BIDS-Apps Containers
+## 4. Build BIDS-Apps Containers
 ```{note}
-Workshop participants can just use the conatiners I have already built. This is more for just your information, or other users. Keep in mind that the versions listed here may not be most up-to-date and you should be encouraged to use the most recent stable versions.
+Workshop participants can just use the conatiners I have already built. This is more for just your information, or other users. Keep in mind that the versions listed here may not be most up-to-date and you are encouraged to use the most recent stable versions.
 ```
 To build the BIDS-Apps containers, we will use `apptainer`. Here is the code used to build the containers used in this workshop:
 ```bash
-apptainer build qsiprep-1.0.0.sif docker://pennlinc/qsiprep:1.0.0
-apptainer build qsirecon-1.0.0.sif docker://pennlinc/qsirecon:1.0.0
+apptainer build qsiprep-1.0.1.sif docker://pennlinc/qsiprep:1.0.1
+apptainer build qsirecon-1.1.0.sif docker://pennlinc/qsirecon:1.1.0
 apptainer build fmriprep-25.0.0.sif docker://nipreps/fmriprep:25.0.0
-apptainer build xcpd-0.10.6.sif docker://pennlinc/xcp_d:0.10.6
+apptainer build xcpd-0.10.7.sif docker://pennlinc/xcp_d:0.10.7
 apptainer cache clean
 ```
 These commands pull images from Docker registries and convert them into Apptainer SIF files.
@@ -78,10 +77,10 @@ Now you are ready to go!
 ```{warning}
 Keep in mind you will need to `mamba activate workshop` whenever you are working on this entering a new terminal.
 ```
-## 6. Download a FreeSurfer license file.
+## 5. Download a FreeSurfer license file.
 If you don't already have one, complete [this registration form](https://surfer.nmr.mgh.harvard.edu/registration.html) to get a FreeSurfer license file. Save it somewhere where you'll remember where you put it.
 
-## 7. Find the Shared Data
+## 6. Find the Shared Data
 ```{note}
 This is only available for the workshop participants. External users are encouraged to use their own data
 ```

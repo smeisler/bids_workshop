@@ -36,7 +36,7 @@ For the rest of this workshop (unless you want to look at your own data), we wil
 
 The first thing you will do is to create your own copy (*not a symlink*) of the data, then we will redefine this as `BIDS`.
 ```bash
-cp -r $SHARED_DATA_DIR/grmpy_bids/bids_orig /path/where/you/want/BIDS_Dataset_DataLad
+cp -r $SHARED_DATA_DIR/grmpy_bids/bids_orig /path/where/you/want/bids_orig
 export BIDS=/path/where/you/want/bids_orig/
 ```
 From here we will essentially be following the [great CuBIDS documentation.](https://cubids.readthedocs.io/en/latest/example.html)
@@ -219,7 +219,7 @@ Date:   Thu Mar 13 14:23:27 2025 -0400
     [DATALAD] new dataset
 ```
 ### Step 3: Add NIFTI data to the JSONS
-Next, we seek to add more image parameters to our sidecars so that we can better define our Entity Sets. Historically, only a subset of parameters in the NIfTI image header have been included in a BIDS sidecar… Parameters such as image dimensions, number of volumes, image obliquity, and voxel sizes — all important data that can change how our pipelines will eventually run!
+Next, we seek to add more image parameters to our sidecars so that we can better define our Entity Sets. Historically, only a subset of parameters in the NIfTI image header have been included in a BIDS sidecar. Parameters such as image dimensions, number of volumes, image obliquity, and voxel sizes are all important data that can change how our pipelines will eventually run!
 
 To add them to the sidecar metadata, run:
 ```bash
