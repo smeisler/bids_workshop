@@ -2,6 +2,7 @@
 
 Now we can use our pre-processed data directly as inputs into out postprocessing apps!
 
+## QSIRecon
 Let's start with QSIRecon. Our `babs init` run will appear similar.
 ```bash
 babs init \
@@ -253,6 +254,7 @@ babs sync-code
 
 When this is all done, we can `babs submit` and `babs merge` just as we did before, and you will have all the DWI outputs you could possibly ask for!
 
+## XCP_D
 For completeness, the below code can be used to create your XCP_D BABS object.
 ```bash
 babs init \
@@ -341,4 +343,5 @@ job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/xcpd"
 
 With XCP_D you will have fully postprocessed fMRI data along with connectivity matrices! Note that for other applications like seed-based connectivity and task-based general linear models, I recommend Nilearn, which cannot be run in BABS since it is not a BIDS-app. I am happy to provide suggestions about how to do this outside of BABS though!
 
+## You're Done!!!
 With all of your data postprocessed, you are ready to begin your analysis, with the confidence that you have processed your data in a quick, efficient, state-of-the-art, and fully transparent way. Happy neuroimaging!!!!!
