@@ -35,8 +35,13 @@ For further insights into the design and benefits of BIDS—and the evidence sup
 
 ## The Softwares We Will Be Using
 [CuBIDS](https://cubids.readthedocs.io/en/latest/) / {cite}`covitz2022curation`
+
 [BABS](https://pennlinc-babs.readthedocs.io/en/stable/index.html) / {cite}`zhao2024reproducible`
+
 [fMRIPrep](https://fmriprep.org/en/stable/) / {cite}`esteban_fmriprep_2019`
+
 [XCPD](https://xcp-d.readthedocs.io/en/latest/) /  {cite}`mehta2024xcp`
+
 [QSIPrep](https://qsiprep.readthedocs.io/en/latest/usage.html) / {cite}`cieslak2021qsiprep`
+
 [QSIRecon](https://qsirecon.readthedocs.io/en/latest/) / (same citation as qsiprep paper)
