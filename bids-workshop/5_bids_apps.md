@@ -63,9 +63,9 @@ cd ../
 ```
 
 ## Prepare the Processing YAML Configurations
-Now we have to tell `BABS` how we want to run the software. This will be comprehensive, including everything from command line arguments to computational requirements (e.g., memory and CPUs). More documentation about the config file can be found [here](https://pennlinc-babs.readthedocs.io/en/stable/preparation_config_yaml_file.html#) and I encourage you to look through it. But for now we can use ones I have created for this workshop. They can be found on the GitHub repo [herePUTLINKIN](PUTLINKIN) and locally at `${SHARED_DATA_DIR}/PUTLOCATION`.
+Now we have to tell `BABS` how we want to run the software. This will be comprehensive, including everything from command line arguments to computational requirements (e.g., memory and CPUs). More documentation about the config file can be found [here](https://pennlinc-babs.readthedocs.io/en/stable/preparation_config_yaml_file.html#) and I encourage you to look through it. But for now we can use ones I have created for this workshop. They can be found on the GitHub repo [here](https://github.com/smeisler/bids_workshop/tree/main/shared_data/babs_files) and locally at `${SHARED_DATA_DIR}/babs_files`.
 
-```bash
+```yaml
 # This is an example config yaml file for:
 #   BIDS App:         fMRIPrep ("fmriprep")
 #   BIDS App version: 25.0.0
@@ -197,7 +197,7 @@ Now try to do this for QSIPrep. You can borrow the `.yaml` configuration I have 
 <details>
     <summary>The `.yaml`</summary>
 
-```bash
+```yaml
 # This is an example config yaml file for:
 #   BIDS App:         QSIPrep ("qsiprep")
 #   BIDS App version: 1.0.1

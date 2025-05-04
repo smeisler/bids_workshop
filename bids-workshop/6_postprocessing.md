@@ -2,7 +2,7 @@
 
 Now we can use our pre-processed data directly as inputs into out postprocessing apps!
 
-Let's start with QSIRecon. Our `babs init` run will appear similar, but you may notice one difference:
+Let's start with QSIRecon. Our `babs init` run will appear similar.
 ```bash
 babs init \
 babs_qsirecon \
@@ -12,16 +12,89 @@ babs_qsirecon \
 --processing_level subject \
 --queue slurm
 ```
-That is, our input to that data is coming directly from the merged outputs of QSIPrep. We also name this input as `qsiprep` when ingressing it.
+The YAML is below (and also in GitHub and on the cluster):
+<details>
+    <summary>The recon spec</summary>
+
+```yaml
+# This is an example config yaml file for:
+#   BIDS App:         QSIRecon ("qsirecon")
+#   BIDS App version: 1.0.0
+#   Task:             regular use
+#   Which system:     Slurm
+
+input_datasets:
+    qsiprep:
+        required_files:
+            - "*_qsiprep*.zip"
+        is_zipped: true
+        origin_url: "/users/PAS2965/smeisler/workshop/babs/babs_qsiprep/merge_ds"
+        path_in_babs: inputs/data/qsiprep
+        unzipped_path_containing_subject_dirs: "qsiprep"
+
+# Files to be copied into the datalad dataset:
+imported_files:
+    # Change original_path to the path to the file on your local machine
+    - original_path: "/users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml"
+      analysis_path: "code/recon_spec.yaml"
+    - original_path: "/users/PAS2965/smeisler/workshop/license.txt"
+      analysis_path: "code/license.txt"
+
+# Arguments in `singularity run`:
+bids_app_args:
+    -w: "$BABS_TMPDIR"
+    --fs-license-file: "code/license.txt"
+    -vv: ""
+    --input-type: "qsiprep"
+    --recon-spec: '"${PWD}"/code/recon_spec.yaml'
+    --output-resolution: "1.5"
+    --nthreads: "$SLURM_CPUS_PER_TASK"
+    --mem-mb: "$SLURM_MEM_PER_NODE"
+
+# Arguments that are passed directly to singularity/apptainer:
+singularity_args:
+    - --containall
+    - --writable-tmpfs
+    - -B /users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml:/code/recon_spec.yaml
+
+# Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):
+#   As qsirecon will use BIDS output layout, we need to ask BABS to create a folder 'qsirecon' to wrap all derivatives:
+all_results_in_one_zip: true
+zip_foldernames:
+    # folder 'qsirecon' will be zipped into 'sub-xx_(ses-yy_)qsirecon-1-1-0.zip'
+    qsirecon: "1-1-0"
+
+# How much cluster resources it needs:
+cluster_resources:
+    interpreting_shell: "/bin/bash"
+    hard_runtime_limit: "24:00:00"
+    customized_text: |
+        #SBATCH --nodes=1
+        #SBATCH --ntasks=1
+        #SBATCH --cpus-per-task=8
+        #SBATCH --mem=32G
+        #SBATCH --propagate=NONE
+        #SBATCH --account=PAS2965
+
+# Activate environment so we have access to Datalad
+script_preamble: |
+    source ${MAMBA_ROOT_PREFIX}/bin/activate workshop
+
+# Where to run the jobs:
+job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/qsirecon"
+```
+</details>
+
+You'll notice that our input to that data is coming directly from the merged outputs of QSIPrep. We also name this input as `qsiprep` when ingressing it.
 ```{note}
-We won't worry about this for the workshop, but the naming of inputs does become important if you have multiple things you are ingressing. For example, if I also needed to add FreeSurfer outputs for QSIrecon, I would have an additional input line for freesurfer in the yaml. If you have questions about these more advanced configurations, please let me know!
+We won't worry about this for the workshop, but the naming of inputs does become important if you have multiple things you are ingressing. For example, if I also needed to add FreeSurfer outputs for QSIRecon, I would have an additional input line for freesurfer in the yaml. If you have questions about these more advanced configurations, please let me know!
 ```
 
 The reconstruction spec I share produces just about every possible metric one could want to analyze for multi-shell DWI data! In short it makes tractography and lots of scalar maps, and returns bundle-wise scalar avergaes in tabular format. These are ready to analyze files!
 <details>
     <summary>The recon spec</summary>
 
-```bash
+```yaml
 description: DKI, NODDI, MAPMRI, MSMT CSD, GQI Scalars, AutoTrack (with MSMT CSD)
 name: workshop_recon_spec
 space: T1w
@@ -162,17 +235,26 @@ nodes:
 ```
 </details>
 
-Like before, lets make the working directory and put the necessary files into our project with:
+Now, for this application, due to a current bug in QSIRecon, we have to make a quick change to the script. This gives us a good opportunity to show how to make changes in a BABS project (though we plan to fix this bug soon)!
+
+In `$BABS/babs_qsirecon/analysis/code/qsirecon-1-1-0_zip.sh`, add the following line before you see `singularity run`:
 ```bash
-mkdir -p /fs/scratch/PAS2965/workshop/babs_tmp/qsirecon
-cp ${FS_LICENSE_FILE} $BABS/babs_qsirecon/analysis/code/license.txt
-cp ${RECON_SPEC} $BABS/babs_qsirecon/analysis/code/recon_spec.yaml
-datalad save -d $BABS/babs_qsirecon/analysis -m "add FS license and recon spec"
-cd $BABS/babs_qsirecon/analysis
-datalad push --to input 
+set +e -u -x
+```
+Then, after the end of that `singularity run` command, reset the default behavior by adding
+```bash
+set -e -u -x
+```
+This temporary change will allow the code to continue running even though QSIRecon will have a meaningless error. To save the code, run the following:
+```bash
+cd $BABS/babs_qsirecon
+babs sync-code
 ```
 
-```
+When this is all done, we can `babs submit` and `babs merge` just as we did before, and you will have all the DWI outputs you could possibly ask for!
+
+For completeness, the below code can be used to create your XCP_D BABS object.
+```bash
 babs init \
 babs_xcpd \
 --container_ds $BABS/containers_datalad/xcpd-container/ \
@@ -183,9 +265,9 @@ babs_xcpd \
 ```
 
 <details>
-    <summary>The recon spec</summary>
+    <summary>The XCP_D YAML</summary>
 
-```bash
+```yaml
 # This is an example config yaml file for:
 #   BIDS App:         XCP_D ("xcpd")
 #   BIDS App version: 0.10.7
@@ -256,3 +338,7 @@ script_preamble: |
 job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/xcpd"
 ```
 </details>
+
+With XCP_D you will have fully postprocessed fMRI data along with connectivity matrices! Note that for other applications like seed-based connectivity and task-based general linear models, I recommend Nilearn, which cannot be run in BABS since it is not a BIDS-app. I am happy to provide suggestions about how to do this outside of BABS though!
+
+With all of your data postprocessed, you are ready to begin your analysis, with the confidence that you have processed your data in a quick, efficient, state-of-the-art, and fully transparent way. Happy neuroimaging!!!!!

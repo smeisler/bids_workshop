@@ -794,7 +794,7 @@ You can see that it will be placed in the `anat` folder (by defining `datatype`)
 
 For non-anatomicals, we will only need the `SeriesDescription` (for this dataset `ProtocolName` is defined the same), so for the sake of non-redundancy I won't run through all the JSONS.
 
-I will now show you the resulting final configuration file after completing this process for all the images. Note this may also be found in the GitHub repo [here (PUTLINKHERELATER)](PUTLINKHERELATER), and locally at `$SHARED_DATA_DIR/ef_example/code/dcm2bids_config.json`
+I will now show you the resulting final configuration file after completing this process for all the images. Note this may also be found in the GitHub repo [here](https://github.com/smeisler/bids_workshop/blob/main/shared_data/ef_example/dcm2bids_config.json), and locally at `$SHARED_DATA_DIR/ef_example/code/dcm2bids_config.json`
 
 ```json
 {
@@ -935,7 +935,7 @@ We use two different methods here for assigning fieldmaps for correction:
 While this is not the official BIDS recommended way anymore, in favor of the BIDS URI which has the full (not relative) path, many BIDS apps still accept the legacy / relative path version and some are not set up for the BIDS URI yet. This includes QSIPrep (at least as of this time / version 1.0.0)!
 ```
 2. `B0FieldIdentifier`/`B0FieldSource` pairings.
-- - In this method, you give a fieldmap a name with the `B0FieldIdentifier` field in the fieldmap json. It can be anything, but you will want to make it intuitive such as `fmap_dwi`. Then in the EPI file you want to correct, e.g., the DWI json in this case, you would add `"B0FieldSource":"fmap_dwi"`.
+- - In this method, you give a fieldmap a name with the `B0FieldIdentifier` field in the fieldmap json. It can be anything, but you will want to make it intuitive, and it should be unique within the whole dataset, such as `sub-xx_fmap_dwi`. Then in the EPI file you want to correct, e.g., the DWI json in this case, you would add `"B0FieldSource":"sub-xx_fmap_dwi"`.
 ```{note}
 It is fine to have **both** of these pairing methods defined. fMRIPrep will always use the `B0*` naming fields over `IntendedFor` however.
 ```
@@ -954,7 +954,7 @@ To add the `B0*` fields to the jsons, we just specify additional `"sidecar_chang
 
 Now that we have our configuration file ready to go, we can convert the files to BIDS!
 
-I have prepared the following example code for you to run the software which can be found in the GitHub repo [here(PUTLINKINLATE)](PUTLINKINLATER) and found locally at `${SHARED_DATA_DIR}/ef_example/code/run_dcm2bids.sh`. Note you will be prompted for subject and session IDs, but you can leave that blank to process all subjects and/or all sessions. For this example it is just one subject and two sessions.
+I have prepared the following example code for you to run the software which can be found in the GitHub repo [here](https://github.com/smeisler/bids_workshop/blob/main/shared_data/ef_example/run_dcm2bids.sh) and found locally at `${SHARED_DATA_DIR}/ef_example/code/run_dcm2bids.sh`. Note you will be prompted for subject and session IDs, but you can leave that blank to process all subjects and/or all sessions. For this example it is just one subject and two sessions.
 
 You can run this with `bash ${SHARED_DATA_DIR}/ef_example/code/run_dcm2bids.sh`.
 

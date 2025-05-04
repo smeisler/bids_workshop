@@ -86,7 +86,7 @@ This is only available for the workshop participants. External users are encoura
 ```
 We will be referencing some shared data I've centralized for this workshop. This contains datasets, code, and the containers we will be using. Run the following command so you can have the path saved to a variable that we can reference later:
 ```bash
-export SHARED_DATA_DIR="/path/to/shared_data"
+export SHARED_DATA_DIR="/users/PAS2965/smeisler/workshop/shared_data"
 ```
 ```{warning}
 This will have to be defined again if you enter a new terminal.
