@@ -37,7 +37,7 @@ mamba update --all
 Create a new environment (here named `workshop`, but you can name it anything) with the essential packages:
 
 ```bash
-mamba create -n workshop -c conda-forge pip dcm2bids dcm2niix git git-annex deno nano pydicom tree apptainer "python<3.12"
+mamba create -n workshop -c conda-forge pip dcm2bids dcm2niix git git-annex deno pydicom "python<3.12"
 ```
 After the environment is created, clean up the Mamba cache:
 

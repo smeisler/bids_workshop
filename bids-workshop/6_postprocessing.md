@@ -172,6 +172,7 @@ cd $BABS/babs_qsirecon/analysis
 datalad push --to input 
 ```
 
+```
 babs init \
 babs_xcpd \
 --container_ds $BABS/containers_datalad/xcpd-container/ \
@@ -179,7 +180,12 @@ babs_xcpd \
 --container_config $BABS/configs/xcpd-0.10.7.yaml \
 --processing_level subject \
 --queue slurm
+```
 
+<details>
+    <summary>The recon spec</summary>
+
+```bash
 # This is an example config yaml file for:
 #   BIDS App:         XCP_D ("xcpd")
 #   BIDS App version: 0.10.7
@@ -248,3 +254,5 @@ script_preamble: |
 
 # Where to run the jobs:
 job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/xcpd"
+```
+</details>
