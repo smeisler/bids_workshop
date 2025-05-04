@@ -40,7 +40,7 @@ For further insights into the design and benefits of BIDS—and the evidence sup
 
 [fMRIPrep](https://fmriprep.org/en/stable/) / {cite}`esteban_fmriprep_2019`
 
-[XCPD](https://xcp-d.readthedocs.io/en/latest/) /  {cite}`mehta2024xcp`
+[XCPD](https://xcp-d.readthedocs.io/en/latest/) / {cite}`mehta2024xcp`
 
 [QSIPrep](https://qsiprep.readthedocs.io/en/latest/usage.html) / {cite}`cieslak2021qsiprep`
 
