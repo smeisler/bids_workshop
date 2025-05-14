@@ -1,0 +1,844 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Step 3: Preprocessing Data with BIDS-Apps &#8212; BIDS Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/costum.css?v=289ff4cc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '5_bids_apps';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Step 4: Using BABS to Postprocess Data" href="6_postprocessing.html" />
+    <link rel="prev" title="Step 2: Curating a BIDS Dataset" href="4_bids_curation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0_intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="BIDS Workshop - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="BIDS Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0_intro.html">
+                    Welcome to my BIDS Workshop!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_preworkshop_reading.html">Pre-Reading: Why is this important?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_prepare_environment.html">Step 0: Setting Up the Computational Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_bids_conversion.html">Step 1: Converting Dicoms to a BIDS Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_bids_curation.html">Step 2: Curating a BIDS Dataset</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Step 3: Preprocessing Data with BIDS-Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_postprocessing.html">Step 4: Using BABS to Postprocess Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/smeisler/bids_workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/smeisler/bids_workshop/issues/new?title=Issue%20on%20page%20%2F5_bids_apps.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/5_bids_apps.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Step 3: Preprocessing Data with BIDS-Apps</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-containers">Prepare the Containers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-processing-yaml-configurations">Prepare the Processing YAML Configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-templateflow">Define TemplateFlow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-babs-init">Run <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-a-test-job">Run a Test Job</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-this-yourself">Try this yourself!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#after-jobs-have-finished">After Jobs have Finished</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="step-3-preprocessing-data-with-bids-apps">
+<h1>Step 3: Preprocessing Data with BIDS-Apps<a class="headerlink" href="#step-3-preprocessing-data-with-bids-apps" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://pennlinc-babs.readthedocs.io/en/stable/overview.html">BIDS App Bootstrap (BABS)</a> <span id="id1">[<a class="reference internal" href="bibliography.html#id7" title="Chenying Zhao, Dorota Jarecka, Sydney Covitz, Yibei Chen, Simon B Eickhoff, Damien A Fair, Alexandre R Franco, Yaroslav O Halchenko, Timothy J Hendrickson, Felix Hoffstaedter, and others. A reproducible and generalizable software workflow for analysis of large-scale neuroimaging data collections using bids apps. Imaging Neuroscience, 2:1–19, 2024.">Zhao <em>et al.</em>, 2024</a>]</span> is a user-friendly and generalizable Python package for reproducible image processing at scale. BABS facilitates the reproducible application of BIDS Apps to large-scale datasets.</p>
+<p>It is helpful not just for streamlining the parallelization of BIDS apps, but also helps track provenance (that is, knowing what apps produced what data). One of the inputs for BABS is a DataLad-tracked dataset, which we already have from CuBIDS in the previous step! Because of that, we can start with this part of the <a class="reference external" href="https://pennlinc-babs.readthedocs.io/en/stable/preparation_container.html#prepare-containerized-bids-app-as-a-datalad-dataset">BABS Documentation.</a></p>
+<p>Lets make a folder called <code class="docutils literal notranslate"><span class="pre">babs</span></code> where we will put relevant files for this process. We will assign it to a variable to reference throughout.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">BABS</span><span class="o">=</span>/where/you/want/babs
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$BABS</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do NOT have a lagging slash after <code class="docutils literal notranslate"><span class="pre">babs/</span></code>. It causes some strange issues with DataLad down the line.</p>
+</div>
+<p>For this part of the workshop we will first deal with <em>pre</em>-processing data. Post-processing will be next!</p>
+<section id="prepare-the-containers">
+<h2>Prepare the Containers<a class="headerlink" href="#prepare-the-containers" title="Link to this heading">#</a></h2>
+<p>I have already built the containers needed for this workshop at <code class="docutils literal notranslate"><span class="pre">${SHARED_DATA_DIR}/containers/</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/
+fmriprep-25.0.0.sif<span class="w">  </span>qsiprep-1.0.1.sif<span class="w">  </span>qsirecon-1.1.0.sif<span class="w">  </span>xcpd-0.10.7.sif
+</pre></div>
+</div>
+<p>We will be version tracking these too, so we need to operate them with DataLad. Let’s create a place for these conatiners to go, and enter that folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/
+</pre></div>
+</div>
+<p>For example, for fMRIPrep we can run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;fmriprep container&quot;</span><span class="w"> </span>fmriprep-container
+<span class="nb">cd</span><span class="w"> </span>fmriprep-container
+datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/fmriprep-25.0.0.sif<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>fmriprep-25-0-0
+<span class="nb">cd</span><span class="w"> </span>../
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the last argument for <code class="docutils literal notranslate"><span class="pre">containers-add</span></code> only has dashes, not periods.</p>
+</div>
+<p>Do the same for the rest of the containers now.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;qsiprep container&quot;</span><span class="w"> </span>qsiprep-container
+<span class="nb">cd</span><span class="w"> </span>qsiprep-container
+datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/qsiprep-1.0.1.sif<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>qsiprep-1-0-1
+<span class="nb">cd</span><span class="w"> </span>../
+
+datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;xcpd container&quot;</span><span class="w"> </span>xcpd-container
+<span class="nb">cd</span><span class="w"> </span>xcpd-container
+datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/xcpd-0.10.7.sif<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>xcpd-0-10-7
+<span class="nb">cd</span><span class="w"> </span>../
+
+datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;qsirecon container&quot;</span><span class="w"> </span>qsirecon-container
+<span class="nb">cd</span><span class="w"> </span>qsirecon-container
+datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/qsirecon-1.1.0.sif<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>qsirecon-1-1-0
+<span class="nb">cd</span><span class="w"> </span>../
+</pre></div>
+</div>
+</section>
+<section id="prepare-the-processing-yaml-configurations">
+<h2>Prepare the Processing YAML Configurations<a class="headerlink" href="#prepare-the-processing-yaml-configurations" title="Link to this heading">#</a></h2>
+<p>Now we have to tell <code class="docutils literal notranslate"><span class="pre">BABS</span></code> how we want to run the software. This will be comprehensive, including everything from command line arguments to computational requirements (e.g., memory and CPUs). More documentation about the config file can be found <a class="reference external" href="https://pennlinc-babs.readthedocs.io/en/stable/preparation_config_yaml_file.html#">here</a> and I encourage you to look through it. But for now we can use ones I have created for this workshop. They can be found on the GitHub repo <a class="reference external" href="https://github.com/smeisler/bids_workshop/tree/main/shared_data/babs_files">here</a> and locally at <code class="docutils literal notranslate"><span class="pre">${SHARED_DATA_DIR}/babs_files</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is an example config yaml file for:</span>
+<span class="c1">#   BIDS App:         fMRIPrep (&quot;fmriprep&quot;)</span>
+<span class="c1">#   BIDS App version: 25.0.0</span>
+<span class="c1">#   Task:             regular use</span>
+<span class="c1">#   Which system:     Slurm</span>
+
+<span class="c1"># WARNING!!!</span>
+<span class="c1">#   This is only an example, which may not necessarily fit your purpose,</span>
+<span class="c1">#   or be an optimized solution for your case,</span>
+<span class="c1">#   or be compatible to the BIDS App version you&#39;re using.</span>
+<span class="c1">#   Therefore, please change and tailor it for your case before use it!!!</span>
+
+<span class="c1"># Define the input datasets</span>
+<span class="nt">input_datasets</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">BIDS</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">required_files</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;func/*_bold.nii*&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;anat/*_T1w.nii*&quot;</span>
+<span class="w">        </span><span class="nt">is_zipped</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">        </span><span class="nt">origin_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/BIDS_Dataset_DataLad&quot;</span>
+<span class="w">        </span><span class="nt">path_in_babs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/data/BIDS</span>
+
+<span class="c1"># Files to be copied into the datalad dataset:</span>
+<span class="nt">imported_files</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Change original_path to the path to the file on your local machine</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/workshop/license.txt&quot;</span>
+<span class="w">      </span><span class="nt">analysis_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/license.txt&quot;</span>
+
+<span class="c1"># Arguments in `singularity run`:</span>
+<span class="nt">bids_app_args</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">-w</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$BABS_TMPDIR&quot;</span>
+<span class="w">    </span><span class="nt">--stop-on-first-crash</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">--fs-license-file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/license.txt&quot;</span>
+<span class="w">    </span><span class="nt">--output-spaces</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MNI152NLin2009cAsym:res-2&quot;</span>
+<span class="w">    </span><span class="nt">--skip-bids-validation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">-vv</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">--cifti-output</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;91k&quot;</span>
+<span class="w">    </span><span class="nt">--n_cpus</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$SLURM_CPUS_PER_TASK&quot;</span>
+<span class="w">    </span><span class="nt">--mem-mb</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$SLURM_MEM_PER_NODE&quot;</span>
+
+<span class="c1"># Arguments that are passed directly to singularity/apptainer:</span>
+<span class="nt">singularity_args</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--containall</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--writable-tmpfs</span>
+
+<span class="c1"># Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):</span>
+<span class="c1">#   This fMRIPrep version (25.0.0) generates two folders, &#39;fmriprep&#39; and &#39;freesurfer&#39;.</span>
+<span class="nt">all_results_in_one_zip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">zip_foldernames</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">fmriprep</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;25-0-0&quot;</span><span class="w"> </span><span class="c1"># folder &#39;fmriprep&#39; will be zipped into &#39;sub-xx_(ses-yy_)fmriprep-25-0-0.zip&#39;</span>
+
+<span class="c1"># How much cluster resources it needs:</span>
+<span class="nt">cluster_resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">interpreting_shell</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/bin/bash&quot;</span>
+<span class="w">    </span><span class="nt">hard_runtime_limit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;24:00:00&quot;</span>
+<span class="w">    </span><span class="nt">customized_text</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">#SBATCH --nodes=1</span>
+<span class="w">        </span><span class="no">#SBATCH --ntasks=1</span>
+<span class="w">        </span><span class="no">#SBATCH --cpus-per-task=4</span>
+<span class="w">        </span><span class="no">#SBATCH --mem=32G</span>
+<span class="w">        </span><span class="no">#SBATCH --propagate=NONE</span>
+<span class="w">        </span><span class="no">#SBATCH --account=PAS2965</span>
+
+<span class="c1"># Activate environment so we have access to Datalad</span>
+<span class="nt">script_preamble</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">source ${MAMBA_ROOT_PREFIX}/bin/activate workshop</span>
+
+<span class="c1"># Where to run the jobs:</span>
+<span class="nt">job_compute_space</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/fs/scratch/PAS2965/workshop/babs_tmp/fmriprep&quot;</span>
+
+<span class="c1"># Alert messages that might be found in log files of failed jobs:</span>
+<span class="c1">#   These messages may be helpful for debugging errors in failed jobs.</span>
+<span class="nt">alert_log_messages</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">stdout</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Excessive</span><span class="nv"> </span><span class="s">topologic</span><span class="nv"> </span><span class="s">defect</span><span class="nv"> </span><span class="s">encountered&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Cannot</span><span class="nv"> </span><span class="s">allocate</span><span class="nv"> </span><span class="s">memory&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;mris_curvature_stats:</span><span class="nv"> </span><span class="s">Could</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">open</span><span class="nv"> </span><span class="s">file&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Numerical</span><span class="nv"> </span><span class="s">result</span><span class="nv"> </span><span class="s">out</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">range&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;fMRIPrep</span><span class="nv"> </span><span class="s">failed&quot;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Workshop users will need to change the <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--account=PAS2965</span></code> line to match your project code on the OSC. Also, you should change <code class="docutils literal notranslate"><span class="pre">job_compute_space:</span> <span class="pre">&quot;/users/PAS2965/smeisler/workshop/tmp/babs_tmp/fmriprep&quot;</span></code> to a place where you have storage/scratch space.</p>
+</div>
+</section>
+<section id="define-templateflow">
+<h2>Define TemplateFlow<a class="headerlink" href="#define-templateflow" title="Link to this heading">#</a></h2>
+<p>Many BIDS-Apps use a centralized collection of brain templates called <a class="reference external" href="https://github.com/templateflow/templateflow">TemplateFlow</a> <span id="id2">[<a class="reference internal" href="bibliography.html#id8" title="Rastko Ciric, William H Thompson, Romy Lorenz, Mathias Goncalves, Eilidh E MacNicol, Christopher J Markiewicz, Yaroslav O Halchenko, Satrajit S Ghosh, Krzysztof J Gorgolewski, Russell A Poldrack, and others. Templateflow: fair-sharing of multi-scale, multi-species brain models. Nature Methods, 19(12):1568–1571, 2022.">Ciric <em>et al.</em>, 2022</a>]</span>, which is a DataLad dataset. Before running <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code>, we need to create a copy of this and tell <code class="docutils literal notranslate"><span class="pre">BABS</span></code> where to find it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$BABS</span>
+datalad<span class="w"> </span>clone<span class="w"> </span>https://github.com/templateflow/templateflow.git
+datalad<span class="w"> </span>siblings<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BABS</span><span class="s2">/templateflow&quot;</span><span class="w"> </span><span class="nb">enable</span><span class="w"> </span>-s<span class="w"> </span>public-s3
+<span class="nb">export</span><span class="w"> </span><span class="nv">TEMPLATEFLOW_HOME</span><span class="o">=</span><span class="nv">$BABS</span>/templateflow
+</pre></div>
+</div>
+</section>
+<section id="run-babs-init">
+<h2>Run <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code><a class="headerlink" href="#run-babs-init" title="Link to this heading">#</a></h2>
+<p>We can now create the BABS dataset in which we will run all of the processing with the following command (the following is an exmaple for <code class="docutils literal notranslate"><span class="pre">fmriprep</span></code>):</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> is still defined as the datalad BIDS dataset we created in the previous step!</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
+babs_fmriprep<span class="w"> </span><span class="se">\</span>
+--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/fmriprep-container/<span class="w"> </span><span class="se">\</span>
+--container_name<span class="w"> </span>fmriprep-25-0-0<span class="w"> </span><span class="se">\</span>
+--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/fmriprep-25.0.0.yaml<span class="w"> </span><span class="se">\</span>
+--processing_level<span class="w"> </span>subject<span class="w"> </span><span class="se">\</span>
+--queue<span class="w"> </span>slurm<span class="w"> </span>
+</pre></div>
+</div>
+<p>Let’s make sure everything is ready to go by running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>check-setup<span class="w"> </span>--project_root<span class="w"> </span><span class="nv">$BABS</span>/babs_fmriprep<span class="w"> </span>--job_test
+</pre></div>
+</div>
+<section id="run-a-test-job">
+<h3>Run a Test Job<a class="headerlink" href="#run-a-test-job" title="Link to this heading">#</a></h3>
+<p>We can submit all the subjects with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>submit<span class="w"> </span>--project-root<span class="w"> </span><span class="nv">$BABS</span>/babs_fmriprep
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You should complete fMRIPrep before trying to <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code> XCP_D, and similarly finish QSIPrep before starting with QSIRecon. Both XCP_D and QSIRecon rely on preprocessed data as inputs.</p>
+</div>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">cat</span></code> command to look at the log outputs in <code class="docutils literal notranslate"><span class="pre">$BABS/babs_fmriprep/analysis/logs</span></code> to see progress of the run. More information on job monitoring and status are <a class="reference external" href="https://pennlinc-babs.readthedocs.io/en/stable/jobs.html#">here.</a></p>
+</section>
+<section id="try-this-yourself">
+<h3>Try this yourself!<a class="headerlink" href="#try-this-yourself" title="Link to this heading">#</a></h3>
+<p>Now try to do this for QSIPrep. You can borrow the <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> configuration I have made if you are unfamiliar with QSIPrep command line arguents, but try to do the rest of the setup on your own. If you get stuck, an answer key is below:</p>
+<details>
+    <summary>The `.yaml`</summary>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is an example config yaml file for:</span>
+<span class="c1">#   BIDS App:         QSIPrep (&quot;qsiprep&quot;)</span>
+<span class="c1">#   BIDS App version: 1.0.1</span>
+<span class="c1">#   Task:             regular use</span>
+<span class="c1">#   Which system:     Slurm</span>
+
+<span class="nt">input_datasets</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">BIDS</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">required_files</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;dwi/*_dwi.nii*&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;anat/*_T1w.nii*&quot;</span>
+<span class="w">        </span><span class="nt">is_zipped</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">        </span><span class="nt">origin_url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/BIDS_Dataset_DataLad&quot;</span>
+<span class="w">        </span><span class="nt">path_in_babs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/data/BIDS</span>
+
+<span class="c1"># Files to be copied into the datalad dataset:</span>
+<span class="nt">imported_files</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Change original_path to the path to the file on your local machine</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/workshop/license.txt&quot;</span>
+<span class="w">      </span><span class="nt">analysis_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/license.txt&quot;</span>
+
+<span class="c1"># Arguments in `singularity run`:</span>
+<span class="nt">bids_app_args</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">-w</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$BABS_TMPDIR&quot;</span>
+<span class="w">    </span><span class="nt">--stop-on-first-crash</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">--fs-license-file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/license.txt&quot;</span>
+<span class="w">    </span><span class="nt">-vv</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">--unringing-method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rpg&quot;</span>
+<span class="w">    </span><span class="nt">--output-resolution</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.5&quot;</span>
+<span class="w">    </span><span class="nt">--notrack</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="nt">--nthreads</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$SLURM_CPUS_PER_TASK&quot;</span>
+<span class="w">    </span><span class="nt">--mem-mb</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$SLURM_MEM_PER_NODE&quot;</span>
+<span class="w">    </span><span class="nt">--skip-bids-validation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+
+<span class="c1"># Arguments that are passed directly to singularity/apptainer:</span>
+<span class="nt">singularity_args</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--containall</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--writable-tmpfs</span>
+
+<span class="c1"># Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):</span>
+<span class="c1">#   As fMRIPrep will use BIDS output layout, we need to ask BABS to create a folder &#39;qsiprep&#39; to wrap all derivatives:</span>
+<span class="nt">all_results_in_one_zip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">zip_foldernames</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">qsiprep</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1-0-1&quot;</span><span class="w"> </span><span class="c1"># folder &#39;qsiprep&#39; will be zipped into &#39;sub-xx_(ses-yy_)qsiprep-1-0-0.zip&#39;</span>
+
+<span class="c1"># How much cluster resources it needs:</span>
+<span class="nt">cluster_resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">interpreting_shell</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/bin/bash&quot;</span>
+<span class="w">    </span><span class="nt">hard_runtime_limit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;24:00:00&quot;</span>
+<span class="w">    </span><span class="nt">customized_text</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">#SBATCH --nodes=1</span>
+<span class="w">        </span><span class="no">#SBATCH --ntasks=1</span>
+<span class="w">        </span><span class="no">#SBATCH --cpus-per-task=4</span>
+<span class="w">        </span><span class="no">#SBATCH --mem=32G</span>
+<span class="w">        </span><span class="no">#SBATCH --propagate=NONE</span>
+<span class="w">        </span><span class="no">#SBATCH --account=PAS2965</span>
+
+<span class="c1"># Activate environment so we have access to Datalad</span>
+<span class="nt">script_preamble</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">source ${MAMBA_ROOT_PREFIX}/bin/activate workshop</span>
+
+<span class="c1"># Where to run the jobs:</span>
+<span class="nt">job_compute_space</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/fs/scratch/PAS2965/workshop/babs_tmp/qsiprep&quot;</span>
+</pre></div>
+</div>
+</details>
+<details>
+    <summary>The rest of the code</summary>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
+babs_qsiprep<span class="w"> </span><span class="se">\</span>
+--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/qsiprep-container/<span class="w"> </span><span class="se">\</span>
+--container_name<span class="w"> </span>qsiprep-1-0-0<span class="w"> </span><span class="se">\</span>
+--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/qsiprep-1.0.0.yaml<span class="w"> </span><span class="se">\</span>
+--processing_level<span class="w"> </span>subject<span class="w"> </span><span class="se">\</span>
+--queue<span class="w"> </span>slurm
+
+babs<span class="w"> </span>check-setup<span class="w"> </span><span class="nv">$BABS</span>/babs_qsiprep<span class="w"> </span>--job_test
+
+babs<span class="w"> </span>submit<span class="w"> </span>--project-root<span class="w"> </span><span class="nv">$BABS</span>/babs_qsiprep
+</pre></div>
+</div>
+</details>
+</section>
+<section id="after-jobs-have-finished">
+<h3>After Jobs have Finished<a class="headerlink" href="#after-jobs-have-finished" title="Link to this heading">#</a></h3>
+<p>When all the jobs are done, you can create the zip files for all of the outputs by running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>merge<span class="w"> </span>--project_root<span class="w"> </span><span class="nv">$BABS</span>/babs_fmriprep
+</pre></div>
+</div>
+<p>You can now see the zip files with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span><span class="nv">$BABS</span>/babs_fmriprep/merge_ds/
+</pre></div>
+</div>
+<p>and these can be cloned to anywhere with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>clone<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ria+file://<span class="nv">$BABS</span>/babs_fmriprep/output_ria#~data<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/your/outpath
+</pre></div>
+</div>
+<p>In the directory where you cloned the outputs, you will see the <code class="docutils literal notranslate"><span class="pre">.zip</span></code> files again, but they will just be symlinks you can retrieve the zip files with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>get<span class="w"> </span>*.zip<span class="w"> </span><span class="c1"># or use the exact filename if you only want a particular file</span>
+</pre></div>
+</div>
+<p>When you are done with those files you can then drop them (saving storage) with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>drop<span class="w"> </span>*.zip<span class="w"> </span><span class="c1"># or use the exact filename if you only want a particular file</span>
+</pre></div>
+</div>
+<p>Now that we finished fMRIPrep and QSIPrep preprocessing, we will now use those outputs for postprocessing with XCP_D and QSIRecon!</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="4_bids_curation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Step 2: Curating a BIDS Dataset</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="6_postprocessing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Step 4: Using BABS to Postprocess Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-containers">Prepare the Containers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-processing-yaml-configurations">Prepare the Processing YAML Configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-templateflow">Define TemplateFlow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-babs-init">Run <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-a-test-job">Run a Test Job</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-this-yourself">Try this yourself!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#after-jobs-have-finished">After Jobs have Finished</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Steven Meisler
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

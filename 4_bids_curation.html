@@ -1,0 +1,862 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Step 2: Curating a BIDS Dataset &#8212; BIDS Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/costum.css?v=289ff4cc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4_bids_curation';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Step 3: Preprocessing Data with BIDS-Apps" href="5_bids_apps.html" />
+    <link rel="prev" title="Step 1: Converting Dicoms to a BIDS Dataset" href="3_bids_conversion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0_intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="BIDS Workshop - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="BIDS Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0_intro.html">
+                    Welcome to my BIDS Workshop!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_preworkshop_reading.html">Pre-Reading: Why is this important?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_prepare_environment.html">Step 0: Setting Up the Computational Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_bids_conversion.html">Step 1: Converting Dicoms to a BIDS Dataset</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Step 2: Curating a BIDS Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_bids_apps.html">Step 3: Preprocessing Data with BIDS-Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_postprocessing.html">Step 4: Using BABS to Postprocess Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/smeisler/bids_workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/smeisler/bids_workshop/issues/new?title=Issue%20on%20page%20%2F4_bids_curation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/4_bids_curation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Step 2: Curating a BIDS Dataset</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-let-s-look-at-our-data">Step 1: Let’s look at our data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-check-the-dataset-into-datalad">Step 2: Check the Dataset into DataLad</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-add-nifti-data-to-the-jsons">Step 3: Add NIFTI data to the JSONS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-run-cubids-validation">Step 4: Run CuBIDS Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-check-for-variant-groups">Step 5: Check for Variant Groups</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-the-variant-renaming">Apply the Variant Renaming</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="step-2-curating-a-bids-dataset">
+<h1>Step 2: Curating a BIDS Dataset<a class="headerlink" href="#step-2-curating-a-bids-dataset" title="Link to this heading">#</a></h1>
+<p>Curation of neuroimaging datasets is a critical step in ensuring that your data are well-organized, accurate, and ready for processing by standardized pipelines. <a class="reference external" href="https://cubids.readthedocs.io/en/latest/"><strong>CuBIDS</strong></a> <span id="id1">[<a class="reference internal" href="bibliography.html#id6" title="Sydney Covitz, Tinashe M Tapera, Azeez Adebimpe, Aaron F Alexander-Bloch, Maxwell A Bertolero, Eric Feczko, Alexandre R Franco, Raquel E Gur, Ruben C Gur, Timothy Hendrickson, and others. Curation of bids (cubids): a workflow and software package for streamlining reproducible curation of large bids datasets. NeuroImage, 263:119609, 2022.">Covitz <em>et al.</em>, 2022</a>]</span> is a specialized tool designed to facilitate the curation of BIDS datasets by automatically identifying and flagging potential issues. Here’s why this step is essential:</p>
+<ol class="arabic simple">
+<li><p>Quality Assurance and Consistency</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Standardization:</strong><br />
+CuBIDS verifies that every element of your dataset adheres to the BIDS specification. This includes checking file naming, folder structures, and associated metadata, which helps maintain consistency across large, multi-site or multi-session datasets.</p></li>
+<li><p><strong>Error Detection:</strong><br />
+By automatically identifying inconsistencies, missing files, or mislabeling, CuBIDS allows you to address problems early—preventing errors from propagating through your data processing pipelines.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Enhanced Reproducibility</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Reliable Analyses:</strong><br />
+A curated dataset minimizes the risk of errors that could compromise your neuroimaging analyses. When all files are in a predictable, standardized format, downstream tools like fMRIPrep or qsiprep can operate more reliably, ultimately leading to reproducible results.</p></li>
+<li><p><strong>Transparent Documentation:</strong><br />
+Automated curation provides a record of detected issues and the corrections applied. This level of documentation is crucial for ensuring transparency in your research methods and for facilitating reproducibility by other researchers.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Facilitating Collaboration and Data Sharing</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Interoperability:</strong><br />
+Standardized datasets are easier to share with collaborators and integrate into multi-site studies. When everyone adheres to the same conventions, the barrier to entry for using and analyzing shared data is greatly reduced.</p></li>
+<li><p><strong>User Confidence:</strong><br />
+Well-curated data build confidence among lab members and external collaborators, ensuring that analyses are based on high-quality, standardized inputs.</p></li>
+</ul>
+<section id="step-1-let-s-look-at-our-data">
+<h2>Step 1: Let’s look at our data<a class="headerlink" href="#step-1-let-s-look-at-our-data" title="Link to this heading">#</a></h2>
+<p>For the rest of this workshop (unless you want to look at your own data), we will be using a different dataset that I have pre-BIDSified. It can be found in <code class="docutils literal notranslate"><span class="pre">${SHARED_DATA_DIR}/grmpy_bids/bids_orig</span></code>. I only made a few modifications after dicom conversion. Those were:</p>
+<ol class="arabic simple">
+<li><p>Deleting original non-defaced anatomicals and dicoms (for privacy)</p></li>
+<li><p>Removing some protected health information (PHI; for privacy)</p></li>
+<li><p>Alphabetizing the json metadata fields (for convenience / readability)</p></li>
+<li><p>Added some information to the <code class="docutils literal notranslate"><span class="pre">dataset_description.json</span></code> and <code class="docutils literal notranslate"><span class="pre">README</span></code></p></li>
+<li><p>Added participant names to <code class="docutils literal notranslate"><span class="pre">participants.tsv</span></code> (false information for privacy)</p></li>
+</ol>
+<p>The first thing you will do is to create your own copy (<em>not a symlink</em>) of the data, then we will redefine this as <code class="docutils literal notranslate"><span class="pre">BIDS</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$SHARED_DATA_DIR</span>/grmpy_bids/bids_orig<span class="w"> </span>/path/where/you/want/bids_orig
+<span class="nb">export</span><span class="w"> </span><span class="nv">BIDS</span><span class="o">=</span>/path/where/you/want/bids_orig/
+</pre></div>
+</div>
+<p>From here we will essentially be following the <a class="reference external" href="https://cubids.readthedocs.io/en/latest/example.html">great CuBIDS documentation.</a></p>
+<p>We will be using <a class="reference external" href="https://www.datalad.org/">DataLad</a> to version control our dataset. It is a pretty amazing tool. But before we version control everything, lets confirm that there is no PHI that we should remove. We can run the following, which prints out all available json metadata fields:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cubids<span class="w"> </span>print-metadata-fields<span class="w"> </span><span class="nv">$BIDS</span>
+</pre></div>
+</div>
+<p>which returns:</p>
+<div style="overflow-y: auto; max-height: 200px;">
+<pre>
+Loading BIDS schema version: 0.11.3. BIDS version: 1.10.0
+Acknowledgments
+AcquisitionMatrixPE
+AcquisitionNumber
+AcquisitionTime
+Authors
+B0FieldIdentifier
+B0FieldSource
+BIDSVersion
+BandwidthPerPixelPhaseEncode
+BaseResolution
+BidsGuess
+BodyPartExamined
+CoilCombinationMethod
+ConsistencyInfo
+ConversionSoftware
+ConversionSoftwareVersion
+DatasetDOI
+Dcm2bidsVersion
+DerivedVendorReportedEchoSpacing
+DeviceSerialNumber
+DiffusionScheme
+DwellTime
+EchoNumber
+EchoTime
+EchoTime1
+EchoTime2
+EchoTrainLength
+EffectiveEchoSpacing
+FlipAngle
+Funding
+HowToAcknowledge
+ImageComments
+ImageOrientationPatientDICOM
+ImageOrientationText
+ImageType
+ImagingFrequency
+InPlanePhaseEncodingDirectionDICOM
+InstitutionAddress
+InstitutionName
+InstitutionalDepartmentName
+IntendedFor
+InversionTime
+License
+MRAcquisitionType
+MagneticFieldStrength
+Manufacturer
+ManufacturersModelName
+MatrixCoilMode
+Modality
+MultibandAccelerationFactor
+Name
+NonlinearGradientCorrection
+ParallelReductionFactorInPlane
+PartialFourier
+PatientName
+PatientPosition
+PercentPhaseFOV
+PercentSampling
+PhaseEncodingDirection
+PhaseEncodingSteps
+PhaseResolution
+PixelBandwidth
+ProcedureStepDescription
+ProtocolName
+PulseSequenceDetails
+ReceiveCoilActiveElements
+ReceiveCoilName
+ReconMatrixPE
+RefLinesPE
+ReferencesAndLinks
+RepetitionTime
+SAR
+ScanOptions
+ScanningSequence
+SequenceName
+SequenceVariant
+SeriesDescription
+SeriesNumber
+ShimSetting
+SliceThickness
+SliceTiming
+SoftwareVersions
+SpacingBetweenSlices
+SpoilingState
+StationName
+TaskName
+TotalReadoutTime
+TxRefAmp
+VariableFlipAngleFlag
+WipMemBlock
+age
+group
+sex
+</pre>
+</div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The lowercase <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">sex</span></code> are from the <code class="docutils literal notranslate"><span class="pre">participants.json</span></code> file.</p>
+</div>
+<p>For this exercise, I added a fake <code class="docutils literal notranslate"><span class="pre">PatientName</span></code> to one of the files, which is <strong>DEFINITELY</strong> PHI that should be removed. We can remove it with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cubids<span class="w"> </span>remove-metadata-fields<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>--fields<span class="w"> </span>PatientName
+</pre></div>
+</div>
+<p>Rerunning the <code class="docutils literal notranslate"><span class="pre">print-metadata-fields</span></code> command now should reveal that <code class="docutils literal notranslate"><span class="pre">PatientName</span></code> is no longer present.</p>
+</section>
+<section id="step-2-check-the-dataset-into-datalad">
+<h2>Step 2: Check the Dataset into DataLad<a class="headerlink" href="#step-2-check-the-dataset-into-datalad" title="Link to this heading">#</a></h2>
+<p>Now we are going to create a version-controlled version of our dataset, starting with initializing an empty directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>create<span class="w"> </span>-c<span class="w"> </span>text2git<span class="w"> </span>/path/where/you/want/BIDS_Dataset_DataLad
+</pre></div>
+</div>
+<p>Now let’s copy our files from the original BIDS directory to the tracked version:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BIDS</span>/*<span class="w"> </span>/path/where/you/want/BIDS_Dataset_DataLad
+</pre></div>
+</div>
+<p>When that’s done we can safely remove our original BIDS data and redefine <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> to be our tracked version moving forward:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$BIDS</span>/
+<span class="nb">export</span><span class="w"> </span><span class="nv">BIDS</span><span class="o">=</span>/path/where/you/want/BIDS_Dataset_DataLad
+</pre></div>
+</div>
+<p>We can see that in our tracked version, we now have new data that is waiting to be saved. <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$BIDS</span> <span class="pre">&amp;&amp;</span> <span class="pre">datalad</span> <span class="pre">status</span></code> returns:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>untracked:<span class="w"> </span>CHANGES<span class="w"> </span><span class="o">(</span>file<span class="o">)</span>
+untracked:<span class="w"> </span>README<span class="w"> </span><span class="o">(</span>file<span class="o">)</span>
+untracked:<span class="w"> </span>dataset_description.json<span class="w"> </span><span class="o">(</span>file<span class="o">)</span>
+untracked:<span class="w"> </span>participants.json<span class="w"> </span><span class="o">(</span>file<span class="o">)</span>
+untracked:<span class="w"> </span>participants.tsv<span class="w"> </span><span class="o">(</span>file<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20017<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20153<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20326<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20461<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20589<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20649<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20809<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20888<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-20963<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>sub-21016<span class="w"> </span><span class="o">(</span>directory<span class="o">)</span>
+untracked:<span class="w"> </span>task-fracback_acq-singleband_events.tsv<span class="w"> </span><span class="o">(</span>file<span class="o">)</span>
+</pre></div>
+</div>
+<p>Let’s save these initial versions of our data now:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>save<span class="w"> </span>-d<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;checked dataset into datalad&quot;</span>
+</pre></div>
+</div>
+<p>We can see this is now tracked when we run <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$BIDS</span> <span class="pre">&amp;&amp;</span> <span class="pre">git</span> <span class="pre">log</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>commit<span class="w"> </span>3f1d126550fe8ccec2d143ee3c8347e64f807aa4<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>master<span class="o">)</span>
+Author:<span class="w"> </span>Steven<span class="w"> </span>Meisler<span class="w"> </span>&lt;steven.meisler@pennmedicine.upenn.edu&gt;
+Date:<span class="w">   </span>Thu<span class="w"> </span>Mar<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">14</span>:28:27<span class="w"> </span><span class="m">2025</span><span class="w"> </span>-0400
+
+<span class="w">    </span>checked<span class="w"> </span>dataset<span class="w"> </span>into<span class="w"> </span>datalad
+
+commit<span class="w"> </span>91e457485db085252ee7a1d04dc010393537f24d
+Author:<span class="w"> </span>Steven<span class="w"> </span>Meisler<span class="w"> </span>&lt;steven.meisler@pennmedicine.upenn.edu&gt;
+Date:<span class="w">   </span>Thu<span class="w"> </span>Mar<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">14</span>:23:29<span class="w"> </span><span class="m">2025</span><span class="w"> </span>-0400
+
+<span class="w">    </span>Instruct<span class="w"> </span>annex<span class="w"> </span>to<span class="w"> </span>add<span class="w"> </span>text<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>Git
+
+commit<span class="w"> </span>e6ebaab0c0740518425091398d5cf940b41618ff
+Author:<span class="w"> </span>Steven<span class="w"> </span>Meisler<span class="w"> </span>&lt;steven.meisler@pennmedicine.upenn.edu&gt;
+Date:<span class="w">   </span>Thu<span class="w"> </span>Mar<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">14</span>:23:27<span class="w"> </span><span class="m">2025</span><span class="w"> </span>-0400
+
+<span class="w">    </span><span class="o">[</span>DATALAD<span class="o">]</span><span class="w"> </span>new<span class="w"> </span>dataset
+</pre></div>
+</div>
+<section id="step-3-add-nifti-data-to-the-jsons">
+<h3>Step 3: Add NIFTI data to the JSONS<a class="headerlink" href="#step-3-add-nifti-data-to-the-jsons" title="Link to this heading">#</a></h3>
+<p>Next, we seek to add more image parameters to our sidecars so that we can better define our Entity Sets. Historically, only a subset of parameters in the NIfTI image header have been included in a BIDS sidecar. Parameters such as image dimensions, number of volumes, image obliquity, and voxel sizes are all important data that can change how our pipelines will eventually run!</p>
+<p>To add them to the sidecar metadata, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cubids<span class="w"> </span>add-nifti-info<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>--use-datalad
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--use-datalad</span></code> flag saves the changes for you! Now we can see the following fields were added to our image files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Dim1Size
+Dim2Size
+Dim3Size
+NumVolumes
+Obliquity
+VoxelSizeDim1
+VoxelSizeDim2
+VoxelSizeDim3
+</pre></div>
+</div>
+</section>
+<section id="step-4-run-cubids-validation">
+<h3>Step 4: Run CuBIDS Validation<a class="headerlink" href="#step-4-run-cubids-validation" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">CuBIDS</span></code> uses the BIDS validator output to create tabular summaries of validation errors and warnings. We already know our dataset here is valid, and we are not concerned with any of the warnings, but this is still good to have.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cubids<span class="w"> </span>validate<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>v0
+</pre></div>
+</div>
+<p>This validates the data and creates validation summaries in <code class="docutils literal notranslate"><span class="pre">$BIDS/code/CuBIDS/</span></code>.</p>
+<p>If there were errors (e.g., a scan was missing too many volumes from being stopped early) and you wanted to safely purge the volume from the dataset, while updating the <code class="docutils literal notranslate"><span class="pre">IntendedFor</span></code> accordingly, refer to the <code class="docutils literal notranslate"><span class="pre">cubids</span> <span class="pre">purge</span></code> function documented <a class="reference external" href="https://cubids.readthedocs.io/en/latest/example.html#bids-validation">here.</a></p>
+<p>Now that we added the <code class="docutils literal notranslate"><span class="pre">v0</span></code> validation summaries to the <code class="docutils literal notranslate"><span class="pre">code</span></code> directory, we have to <code class="docutils literal notranslate"><span class="pre">datalad</span> <span class="pre">save</span></code> our status before we proceed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>save<span class="w"> </span>-d<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Ran v0 validation&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="step-5-check-for-variant-groups">
+<h3>Step 5: Check for Variant Groups<a class="headerlink" href="#step-5-check-for-variant-groups" title="Link to this heading">#</a></h3>
+<p>Using the metadata of the images, <code class="docutils literal notranslate"><span class="pre">CuBIDS</span></code> will check for images that have variants in fields such as voxel dimensions, repetition times, and other important fields. To do that, we run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cubids<span class="w"> </span>group<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>v0
+</pre></div>
+</div>
+<p>Now let’s look at the outputs with <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">$BIDS/code/CuBIDS/v0_AcqGroupInfo.txt</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-anat_reconstruction-defaced_suffix-T1w&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-anat_reconstruction-defaced_suffix-T2w&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-dwi_direction-AP_suffix-dwi_acquisition-multiband&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_direction-PA_fmap-epi_suffix-epi_acquisition-multiband&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_fmap-magnitude1_suffix-magnitude1&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_fmap-magnitude2_suffix-magnitude2&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_fmap-phasediff_suffix-phasediff&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-func_suffix-bold_task-fracback_acquisition-singleband&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-func_suffix-bold_task-rest_acquisition-multiband&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-func_suffix-bold_task-rest_acquisition-singleband&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>
+<span class="m">2</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-anat_reconstruction-defaced_suffix-T1w&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-anat_reconstruction-defaced_suffix-T2w&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-dwi_direction-AP_suffix-dwi_acquisition-multiband&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_direction-PA_fmap-epi_suffix-epi_acquisition-multiband&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_fmap-magnitude1_suffix-magnitude1&#39;</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_fmap-magnitude2_suffix-magnitude2&#39;</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-fmap_fmap-phasediff_suffix-phasediff&#39;</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-func_suffix-bold_task-fracback_acquisition-singleband&#39;</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-func_suffix-bold_task-rest_acquisition-multiband&#39;</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s1">&#39;datatype-func_suffix-bold_task-rest_acquisition-singleband&#39;</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>We can see that there are two groups of this data. A dominant group with 9 subjects, and another group with one subject that had variant BOLD runs and a magnitude2 and phasediff fieldmap file. We see with <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">$BIDS/code/CuBIDS/v0_AcqGrouping.tsv</span></code> that the subject is <code class="docutils literal notranslate"><span class="pre">sub-20017</span></code>.</p>
+<p>How were these files different?
+Looking at <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">$BIDS/code/CuBIDS/v0_summary.tsv</span></code>, we see that the variants have names:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datatype-fmap_fmap-magnitude2_suffix-magnitude2_acquisition-VARIANTMultibandAccelerationFactor2
+datatype-fmap_fmap-phasediff_suffix-phasediff_acquisition-VARIANTMultibandAccelerationFactor2
+datatype-func_suffix-bold_task-fracback_acquisition-singlebandVARIANTObliquityFalse
+datatype-func_suffix-bold_task-rest_acquisition-multibandVARIANTObliquityFalse
+datatype-func_suffix-bold_task-rest_acquisition-singlebandVARIANTObliquityFalse
+</pre></div>
+</div>
+<p>This implies that our variant subject’s fieldmaps had different Multiband Acceleration Factors and BOLD files that were not acquired obliquely.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an odd dataset in which non-oblique was variant. Most data isn’t collected obliquely! Note that <code class="docutils literal notranslate"><span class="pre">fMRIPrep</span></code> and <code class="docutils literal notranslate"><span class="pre">QSIPrep</span></code> can handle oblique files fine, but it has to make adjustments, so this is good to note.</p>
+</div>
+<p>Following instructions <a class="reference external" href="https://cubids.readthedocs.io/en/latest/example.html#visualizing-metadata-heterogeneity">here</a>, we can decide how we want these variants renamed and whether we want to keep them in the dataset. But for the sake of this exercise, we will use the default renaming scheme and not do any purging.</p>
+<p>We save our progress before proceeding:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>save<span class="w"> </span>-d<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;run cubids grouping&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="apply-the-variant-renaming">
+<h2>Apply the Variant Renaming<a class="headerlink" href="#apply-the-variant-renaming" title="Link to this heading">#</a></h2>
+<p>Now we want to rename our files to indicate the variant groups. Note that if we were to do this manually, we might miss important details like updating paths in <code class="docutils literal notranslate"><span class="pre">IntendedFor</span></code> entries, and <code class="docutils literal notranslate"><span class="pre">CuBIDS</span></code> takes care of this for us! We can apply our renaming with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cubids<span class="w"> </span>apply<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>v0_summary.tsv<span class="w"> </span>v0_files.tsv<span class="w"> </span>v1<span class="w"> </span>--use-datalad
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step can take a long time on large datasets, and could be worth submitting to a compute node.</p>
+</div>
+<p>When this finishes, we see that the variant subject’s files have been renamed, with <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">$BIDS/sub-20017/ses-1/func</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sub-20017_ses-1_task-fracback_acq-singlebandVARIANTObliquityFalse_bold.json<span class="w">    </span>sub-20017_ses-1_task-rest_acq-multibandVARIANTObliquityFalse_bold.nii.gz
+sub-20017_ses-1_task-fracback_acq-singlebandVARIANTObliquityFalse_bold.nii.gz<span class="w">  </span>sub-20017_ses-1_task-rest_acq-singlebandVARIANTObliquityFalse_bold.json
+sub-20017_ses-1_task-rest_acq-multibandVARIANTObliquityFalse_bold.json<span class="w">         </span>sub-20017_ses-1_task-rest_acq-singlebandVARIANTObliquityFalse_bold.nii.gz
+</pre></div>
+</div>
+<p>and in the fieldmaps, we see, with <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">$BIDS/sub-20017/ses-1/fmap/sub-20017_ses-1_phasediff.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;IntendedFor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;ses-1/func/sub-20017_ses-1_task-fracback_acq-singlebandVARIANTObliquityFalse_bold.nii.gz&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;ses-1/func/sub-20017_ses-1_task-rest_acq-multibandVARIANTObliquityFalse_bold.nii.gz&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;ses-1/func/sub-20017_ses-1_task-rest_acq-singlebandVARIANTObliquityFalse_bold.nii.gz&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CuBIDS</span></code> errantly put a file called <code class="docutils literal notranslate"><span class="pre">v1_full_cmd.sh</span></code> in the BIDS root directory. Let’s move it to the code directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span><span class="nv">$BIDS</span>/v1_full_cmd.sh<span class="w"> </span><span class="nv">$BIDS</span>/code/CuBIDS/
+</pre></div>
+</div>
+<p>Rerunning the BIDS validator (while ignoring warnings) reveals the dataset is still valid:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>deno<span class="w"> </span>run<span class="w"> </span>-ERWN<span class="w"> </span>jsr:@bids/validator<span class="w"> </span><span class="nv">$PWD</span><span class="w"> </span>--ignoreWarnings
+
+This<span class="w"> </span>dataset<span class="w"> </span>appears<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>BIDS<span class="w"> </span>compatible.
+
+<span class="w">          </span>Summary:<span class="w">                          </span>Available<span class="w"> </span>Tasks:<span class="w">        </span>Available<span class="w"> </span>Modalities:
+<span class="w">          </span><span class="m">246</span><span class="w"> </span>Files,<span class="w"> </span><span class="m">7</span>.95<span class="w"> </span>GB<span class="w">                </span>Fractal<span class="w"> </span>N-Back<span class="w">          </span>MRI
+<span class="w">          </span><span class="m">10</span><span class="w"> </span>-<span class="w"> </span>Subjects<span class="w"> </span><span class="m">1</span><span class="w"> </span>-<span class="w"> </span>Sessions<span class="w">        </span>Resting<span class="w"> </span>State
+
+<span class="w">	</span>If<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>any<span class="w"> </span>questions,<span class="w"> </span>please<span class="w"> </span>post<span class="w"> </span>on<span class="w"> </span>https://neurostars.org/tags/bids.
+</pre></div>
+</div>
+<p>Now that this is all ready to go, we save one last time:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>save<span class="w"> </span>-d<span class="w"> </span><span class="nv">$BIDS</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;finished v1 curation&quot;</span>
+</pre></div>
+</div>
+<p>If wanted to be <em>really</em> careful, we can create an exemplar dataset that has one subject per variant group to test our pipelines. That could be helpful for large datasets with several variants. But for our purposes, we will just proceed with processing everyone.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3_bids_conversion.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Step 1: Converting Dicoms to a BIDS Dataset</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="5_bids_apps.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Step 3: Preprocessing Data with BIDS-Apps</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-let-s-look-at-our-data">Step 1: Let’s look at our data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-check-the-dataset-into-datalad">Step 2: Check the Dataset into DataLad</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-add-nifti-data-to-the-jsons">Step 3: Add NIFTI data to the JSONS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-run-cubids-validation">Step 4: Run CuBIDS Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-check-for-variant-groups">Step 5: Check for Variant Groups</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-the-variant-renaming">Apply the Variant Renaming</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Steven Meisler
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
