@@ -1,2 +1,2 @@
-# bids_workshop
-Repository for INCF/Repronim Workshop on Multimodal BIDS Neuroimaging Analysis
+# ReproNim / INCF Fellowship Project for Steven Meisler
+https://www.stevenmeisler.com/bids_workshop/0_intro.html
