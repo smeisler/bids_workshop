@@ -1,0 +1,123 @@
+{
+    "descriptions": [
+        {
+            "datatype": "anat",
+            "suffix": "T1w",
+            "criteria": {
+                "SeriesDescription": "anat_T1w",
+                "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "NORM", "MAGNITUDE"]
+            }
+        },
+        {
+            "datatype": "anat",
+            "suffix": "T2w",
+            "criteria": {
+                "SeriesDescription": "anat_T2w",
+                "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "NORM", "MAGNITUDE"]
+            }
+        },
+        {
+            "id": "dwi",
+            "datatype": "dwi",
+            "suffix": "dwi",
+            "custom_entities": "dir-AP",
+            "criteria": {
+                "SeriesDescription": "dwi_acq-multishell_dir-AP_dwi"
+            },
+            "sidecar_changes": {
+                "IntendedFor": "dwi",
+                "B0FieldSource": "dwi_fmap"
+            }
+        },
+        {
+            "id": "dwi-fmap-PA",
+            "datatype": "fmap",
+            "suffix": "epi",
+            "custom_entities": "acq-dwi_dir-PA",
+            "criteria": {
+                "ProtocolName": "fmap_acq-dMRIdistmap_dir-PA_epi"
+            },
+            "sidecar_changes": {
+                "IntendedFor": "dwi",
+                "B0FieldIdentifier": "dwi_fmap"
+            }
+        },
+        {
+            "id": "dwi-fmap-AP",
+            "datatype": "fmap",
+            "suffix": "epi",
+            "custom_entities": "acq-dwi_dir-AP",
+            "criteria": {
+                "ProtocolName": "fmap_acq-dMRIdistmap_dir-AP_epi"
+            },
+            "sidecar_changes": {
+                "IntendedFor": "dwi",
+                "B0FieldIdentifier": "dwi_fmap"
+            }
+        },
+        {
+            "id": "func-rest",
+            "datatype": "func",
+            "suffix": "bold",
+            "custom_entities": "task-rest",
+            "criteria": {
+                "ProtocolName": "func_task-rest*"
+            },
+            "sidecar_changes": {
+                "TaskName": "rest",
+                "B0FieldSource": "fmri_fmap"
+            }
+        },
+        {
+            "id": "func-task",
+            "datatype": "func",
+            "suffix": "bold",
+            "custom_entities": "task-fracnoback",
+            "criteria": {
+                "ProtocolName": "func_task-fracnoback*"
+            },
+            "sidecar_changes": {
+                "TaskName": "Fractional 0-Back",
+                "B0FieldSource": "fmri_fmap"
+            }
+        },
+        {
+            "id": "fmri-fmap-PA",
+            "datatype": "fmap",
+            "suffix": "epi",
+            "custom_entities": "acq-fmri_dir-PA",
+            "criteria": {
+                "ProtocolName": "fmap_acq-fMRIdistmap_dir-PA_epi"
+            },
+            "sidecar_changes": {
+                "IntendedFor": ["func-rest","func-task"],
+                "B0FieldIdentifier": "fmri_fmap"
+            }
+        },
+        {
+            "id": "fmri-fmap-AP",
+            "datatype": "fmap",
+            "suffix": "epi",
+            "custom_entities": "acq-fmri_dir-AP",
+            "criteria": {
+                "ProtocolName": "fmap_acq-fMRIdistmap_dir-AP_epi"
+            },
+            "sidecar_changes": {
+                "IntendedFor": ["func-rest","func-task"],
+                "B0FieldIdentifier": "fmri_fmap"
+            }
+        }
+    ],
+    "bids_uri": "relative",
+    "post_op": [
+        {
+            "cmd": "pydeface --outfile dst_file src_file",
+            "datatype": "anat",
+            "suffix": [
+                "T1w",
+                "T2w"
+            ],
+            "custom_entities": "rec-defaced"
+        }
+    ]
+}
