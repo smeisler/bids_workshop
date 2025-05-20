@@ -15,7 +15,7 @@ babs_qsirecon \
 ```
 The YAML is below (and also in GitHub and on the cluster):
 <details>
-    <summary>The recon spec</summary>
+    <summary>The YAML file</summary>
 
 ```yaml
 # This is an example config yaml file for:
