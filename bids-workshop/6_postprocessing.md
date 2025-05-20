@@ -20,7 +20,7 @@ The YAML is below (and also in GitHub and on the cluster):
 ```yaml
 # This is an example config yaml file for:
 #   BIDS App:         QSIRecon ("qsirecon")
-#   BIDS App version: 1.0.0
+#   BIDS App version: 1.1.0
 #   Task:             regular use
 #   Which system:     Slurm
 
