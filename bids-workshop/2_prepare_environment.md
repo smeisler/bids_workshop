@@ -67,7 +67,7 @@ To build the BIDS-Apps containers, we will use `apptainer`. Here is the code use
 ```bash
 apptainer build qsiprep-1.0.1.sif docker://pennlinc/qsiprep:1.0.1
 apptainer build qsirecon-1.1.0.sif docker://pennlinc/qsirecon:1.1.0
-apptainer build fmriprep-25.0.0.sif docker://nipreps/fmriprep:25.0.0
+apptainer build fmriprep-25.1.0.sif docker://nipreps/fmriprep:25.1.0
 apptainer build xcpd-0.10.7.sif docker://pennlinc/xcp_d:0.10.7
 apptainer cache clean
 ```
