@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/costum.css?v=289ff4cc" />
@@ -421,7 +421,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$BABS</s
 <h2>Prepare the Containers<a class="headerlink" href="#prepare-the-containers" title="Link to this heading">#</a></h2>
 <p>I have already built the containers needed for this workshop at <code class="docutils literal notranslate"><span class="pre">${SHARED_DATA_DIR}/containers/</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/
-fmriprep-25.0.0.sif<span class="w">  </span>qsiprep-1.0.1.sif<span class="w">  </span>qsirecon-1.1.0.sif<span class="w">  </span>xcpd-0.10.7.sif
+fmriprep-25.1.0.sif<span class="w">  </span>qsiprep-1.0.1.sif<span class="w">  </span>qsirecon-1.1.0.sif<span class="w">  </span>xcpd-0.10.7.sif
 </pre></div>
 </div>
 <p>We will be version tracking these too, so we need to operate them with DataLad. Let’s create a place for these conatiners to go, and enter that folder:</p>
@@ -433,8 +433,8 @@ fmriprep-25.0.0.sif<span class="w">  </span>qsiprep-1.0.1.sif<span class="w">  <
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;fmriprep container&quot;</span><span class="w"> </span>fmriprep-container
 <span class="nb">cd</span><span class="w"> </span>fmriprep-container
 datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/fmriprep-25.0.0.sif<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>fmriprep-25-0-0
+<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/fmriprep-25.1.0.sif<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>fmriprep-25-1-0
 <span class="nb">cd</span><span class="w"> </span>../
 </pre></div>
 </div>
@@ -471,7 +471,7 @@ datalad<span class="w"> </span>containers-add<span class="w"> </span><span class
 <p>Now we have to tell <code class="docutils literal notranslate"><span class="pre">BABS</span></code> how we want to run the software. This will be comprehensive, including everything from command line arguments to computational requirements (e.g., memory and CPUs). More documentation about the config file can be found <a class="reference external" href="https://pennlinc-babs.readthedocs.io/en/stable/preparation_config_yaml_file.html#">here</a> and I encourage you to look through it. But for now we can use ones I have created for this workshop. They can be found on the GitHub repo <a class="reference external" href="https://github.com/smeisler/bids_workshop/tree/main/shared_data/babs_files">here</a> and locally at <code class="docutils literal notranslate"><span class="pre">${SHARED_DATA_DIR}/babs_files</span></code>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is an example config yaml file for:</span>
 <span class="c1">#   BIDS App:         fMRIPrep (&quot;fmriprep&quot;)</span>
-<span class="c1">#   BIDS App version: 25.0.0</span>
+<span class="c1">#   BIDS App version: 25.1.0</span>
 <span class="c1">#   Task:             regular use</span>
 <span class="c1">#   Which system:     Slurm</span>
 
@@ -515,10 +515,10 @@ datalad<span class="w"> </span>containers-add<span class="w"> </span><span class
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--writable-tmpfs</span>
 
 <span class="c1"># Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):</span>
-<span class="c1">#   This fMRIPrep version (25.0.0) generates two folders, &#39;fmriprep&#39; and &#39;freesurfer&#39;.</span>
+<span class="c1">#   This fMRIPrep version (25.1.0) generates two folders, &#39;fmriprep&#39; and &#39;freesurfer&#39;.</span>
 <span class="nt">all_results_in_one_zip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="nt">zip_foldernames</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">fmriprep</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;25-0-0&quot;</span><span class="w"> </span><span class="c1"># folder &#39;fmriprep&#39; will be zipped into &#39;sub-xx_(ses-yy_)fmriprep-25-0-0.zip&#39;</span>
+<span class="w">    </span><span class="nt">fmriprep</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;25-1-0&quot;</span><span class="w"> </span><span class="c1"># folder &#39;fmriprep&#39; will be zipped into &#39;sub-xx_(ses-yy_)fmriprep-25-1-0.zip&#39;</span>
 
 <span class="c1"># How much cluster resources it needs:</span>
 <span class="nt">cluster_resources</span><span class="p">:</span>
@@ -575,8 +575,8 @@ datalad<span class="w"> </span>siblings<span class="w"> </span>-d<span class="w"
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
 babs_fmriprep<span class="w"> </span><span class="se">\</span>
 --container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/fmriprep-container/<span class="w"> </span><span class="se">\</span>
---container_name<span class="w"> </span>fmriprep-25-0-0<span class="w"> </span><span class="se">\</span>
---container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/fmriprep-25.0.0.yaml<span class="w"> </span><span class="se">\</span>
+--container_name<span class="w"> </span>fmriprep-25-1-0<span class="w"> </span><span class="se">\</span>
+--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/fmriprep-25.1.0.yaml<span class="w"> </span><span class="se">\</span>
 --processing_level<span class="w"> </span>subject<span class="w"> </span><span class="se">\</span>
 --queue<span class="w"> </span>slurm<span class="w"> </span>
 </pre></div>
