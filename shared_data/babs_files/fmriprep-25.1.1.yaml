@@ -1,6 +1,6 @@
 # This is an example config yaml file for:
 #   BIDS App:         fMRIPrep ("fmriprep")
-#   BIDS App version: 25.1.0
+#   BIDS App version: 25.1.1
 #   Task:             regular use
 #   Which system:     Slurm
 
@@ -44,10 +44,10 @@ singularity_args:
     - --writable-tmpfs
 
 # Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):
-#   This fMRIPrep version (25.1.0) generates two folders, 'fmriprep' and 'freesurfer'.
+#   This fMRIPrep version (25.1.1) generates two folders, 'fmriprep' and 'freesurfer'.
 all_results_in_one_zip: true
 zip_foldernames:
-    fmriprep: "25-1-0" # folder 'fmriprep' will be zipped into 'sub-xx_(ses-yy_)fmriprep-25-1-0.zip'
+    fmriprep: "25-1-1" # folder 'fmriprep' will be zipped into 'sub-xx_(ses-yy_)fmriprep-25-1-1.zip'
 
 # How much cluster resources it needs:
 cluster_resources:
