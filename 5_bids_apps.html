@@ -572,13 +572,7 @@ datalad<span class="w"> </span>siblings<span class="w"> </span>-d<span class="w"
 <p class="admonition-title">Note</p>
 <p>Make sure <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> is still defined as the datalad BIDS dataset we created in the previous step!</p>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-babs_fmriprep<span class="w"> </span><span class="se">\</span>
---container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/fmriprep-container/<span class="w"> </span><span class="se">\</span>
---container_name<span class="w"> </span>fmriprep-25-1-1<span class="w"> </span><span class="se">\</span>
---container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/fmriprep-25.1.1.yaml<span class="w"> </span><span class="se">\</span>
---processing_level<span class="w"> </span>subject<span class="w"> </span><span class="se">\</span>
---queue<span class="w"> </span>slurm<span class="w"> </span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span>babs_fmriprep<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/fmriprep-container/<span class="w"> </span>--container_name<span class="w"> </span>fmriprep-25-1-1<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/fmriprep-25.1.1.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm<span class="w"> </span>
 </pre></div>
 </div>
 <p>Let’s make sure everything is ready to go by running</p>

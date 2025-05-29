@@ -166,13 +166,7 @@ Make sure `BIDS` is still defined as the datalad BIDS dataset we created in the 
 ```
 
 ```bash
-babs init \
-babs_fmriprep \
---container_ds $BABS/containers_datalad/fmriprep-container/ \
---container_name fmriprep-25-1-1 \
---container_config $BABS/configs/fmriprep-25.1.1.yaml \
---processing_level subject \
---queue slurm 
+babs init babs_fmriprep --container_ds $BABS/containers_datalad/fmriprep-container/ --container_name fmriprep-25-1-1 --container_config $BABS/configs/fmriprep-25.1.1.yaml --processing_level subject --queue slurm 
 ```
 
 Let's make sure everything is ready to go by running
