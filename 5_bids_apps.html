@@ -544,7 +544,7 @@ datalad<span class="w"> </span>containers-add<span class="w"> </span>--url<span 
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Workshop users will need to change the <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--account=PAS2965</span></code> line to match your project code on the OSC. Also, you should change <code class="docutils literal notranslate"><span class="pre">job_compute_space:</span> <span class="pre">&quot;/users/PAS2965/smeisler/workshop/tmp/babs_tmp/fmriprep&quot;</span></code> to a place where you have storage/scratch space.</p>
+<p>Workshop users will need to change the <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--account=PAS2965</span></code> line to match your project code on the OSC. Also, you should change <code class="docutils literal notranslate"><span class="pre">job_compute_space:</span> <span class="pre">&quot;/users/PAS2965/smeisler/workshop/tmp/babs_tmp/fmriprep&quot;</span></code> to a place where you have storage/scratch space. BEFORE PROCEEDING, run <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">-p</span></code> followed by what you put for <code class="docutils literal notranslate"><span class="pre">job_compute_space</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -579,11 +579,13 @@ datalad<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </s
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you are getting an error that <code class="docutils literal notranslate"><span class="pre">datalad</span></code> cannot be found, you must do the following (I do NOT know why this error occurs for a handful of people):
-1.Find your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> variable: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PATH</span></code>. Copy the output to your clipboard.
-2.Open up a text file for editing: <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">$BABS/babs_fmriprep/analysis/code/participant_job.sh</span></code>
-3.Under the line that says <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">${MAMBA_ROOT_PREFIX}/bin/activate</span> <span class="pre">workshop</span></code>, add a line that says <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=</span></code> and then paste the result after <code class="docutils literal notranslate"><span class="pre">=</span></code>. Save the file with (CNTR+O) then exit with (CNTR+X).
-4. <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$BABS/babs_fmriprep</span></code> and then run <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">sync-code</span></code> to save the change.</p>
+<p>If you are getting an error that <code class="docutils literal notranslate"><span class="pre">datalad</span></code> cannot be found, you must do the following (I do NOT know why this error occurs for a handful of people):</p>
+<p>1.Find your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> variable: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PATH</span></code>. Copy the output to your clipboard.</p>
+<p>2.Open up a text file for editing: <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">$BABS/babs_fmriprep/analysis/code/participant_job.sh</span></code></p>
+<p>3.Under the line that says <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">${MAMBA_ROOT_PREFIX}/bin/activate</span> <span class="pre">workshop</span></code>, add a line that says <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=</span></code> and then paste the result after <code class="docutils literal notranslate"><span class="pre">=</span></code>. Save the file with (CNTR+O) then exit with (CNTR+X).</p>
+<ol class="arabic simple" start="4">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$BABS/babs_fmriprep</span></code> and then run <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">sync-code</span></code> to save the change.</p></li>
+</ol>
 </div>
 <section id="run-a-test-job">
 <h3>Run a Test Job<a class="headerlink" href="#run-a-test-job" title="Link to this heading">#</a></h3>
