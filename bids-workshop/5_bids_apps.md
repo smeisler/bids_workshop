@@ -143,7 +143,7 @@ Workshop users will need to change the `#SBATCH --account=PAS2965` line to match
 ```
 
 ## Define TemplateFlow
-Many BIDS-Apps use a centralized collection of brain templates called [TemplateFlow](https://github.com/templateflow/templateflow) {cite}`ciric2022templateflow`, which is a DataLad dataset. Before running `babs init`, we need to create a copy of this, tell `BABS` where to find it, and download some file.
+Many BIDS-Apps use a centralized collection of brain templates called [TemplateFlow](https://github.com/templateflow/templateflow) {cite}`ciric2022templateflow`, which is a DataLad dataset. Before running `babs init`, we need to create a copy of this, tell `BABS` where to find it, and download some files.
 ```bash
 cd $BABS
 datalad clone https://github.com/templateflow/templateflow.git
