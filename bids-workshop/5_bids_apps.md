@@ -19,7 +19,7 @@ For this part of the workshop we will first deal with *pre*-processing data. Pos
 I have already built the containers needed for this workshop at `${SHARED_DATA_DIR}/containers/`. 
 ```bash
 ls ${SHARED_DATA_DIR}/containers/
-fmriprep-25.1.1.sif  qsiprep-1.0.1.sif  qsirecon-1.1.0.sif  xcpd-0.10.7.sif
+fmriprep-25.0.0.sif  qsiprep-1.0.1.sif  qsirecon-1.1.0.sif  xcpd-0.10.7.sif
 ```
 We will be version tracking these too, so we need to operate them with DataLad. Let's create a place for these conatiners to go, and enter that folder:
 ```bash
@@ -30,9 +30,7 @@ For example, for fMRIPrep we can run:
 ```bash
 datalad create -D "fmriprep container" fmriprep-container
 cd fmriprep-container
-datalad containers-add \
-    --url ${SHARED_DATA_DIR}/containers/fmriprep-25.1.1.sif \
-    fmriprep-25-1-1
+datalad containers-add --url ${SHARED_DATA_DIR}/containers/fmriprep-25.0.0.sif fmriprep-25-0-0
 cd ../
 ```
 ```{note}
@@ -42,23 +40,17 @@ Do the same for the rest of the containers now.
 ```bash
 datalad create -D "qsiprep container" qsiprep-container
 cd qsiprep-container
-datalad containers-add \
-    --url ${SHARED_DATA_DIR}/containers/qsiprep-1.0.1.sif \
-    qsiprep-1-0-1
+datalad containers-add --url ${SHARED_DATA_DIR}/containers/qsiprep-1.0.1.sif qsiprep-1-0-1
 cd ../
 
 datalad create -D "xcpd container" xcpd-container
 cd xcpd-container
-datalad containers-add \
-    --url ${SHARED_DATA_DIR}/containers/xcpd-0.10.7.sif \
-    xcpd-0-10-7
+datalad containers-add --url ${SHARED_DATA_DIR}/containers/xcpd-0.10.7.sif xcpd-0-10-7
 cd ../
 
 datalad create -D "qsirecon container" qsirecon-container
 cd qsirecon-container
-datalad containers-add \
-    --url ${SHARED_DATA_DIR}/containers/qsirecon-1.1.0.sif \
-    qsirecon-1-1-0
+datalad containers-add --url ${SHARED_DATA_DIR}/containers/qsirecon-1.1.0.sif qsirecon-1-1-0
 cd ../
 ```
 
@@ -68,7 +60,7 @@ Now we have to tell `BABS` how we want to run the software. This will be compreh
 ```yaml
 # This is an example config yaml file for:
 #   BIDS App:         fMRIPrep ("fmriprep")
-#   BIDS App version: 25.1.1
+#   BIDS App version: 25.0.0
 #   Task:             regular use
 #   Which system:     Slurm
 
@@ -115,7 +107,7 @@ singularity_args:
 #   This fMRIPrep version (25.1.1) generates two folders, 'fmriprep' and 'freesurfer'.
 all_results_in_one_zip: true
 zip_foldernames:
-    fmriprep: "25-1-1" # folder 'fmriprep' will be zipped into 'sub-xx_(ses-yy_)fmriprep-25-1-1.zip'
+    fmriprep: "25-0-0" # folder 'fmriprep' will be zipped into 'sub-xx_(ses-yy_)fmriprep-25-1-1.zip'
 
 # How much cluster resources it needs:
 cluster_resources:
@@ -151,12 +143,14 @@ Workshop users will need to change the `#SBATCH --account=PAS2965` line to match
 ```
 
 ## Define TemplateFlow
-Many BIDS-Apps use a centralized collection of brain templates called [TemplateFlow](https://github.com/templateflow/templateflow) {cite}`ciric2022templateflow`, which is a DataLad dataset. Before running `babs init`, we need to create a copy of this and tell `BABS` where to find it.
+Many BIDS-Apps use a centralized collection of brain templates called [TemplateFlow](https://github.com/templateflow/templateflow) {cite}`ciric2022templateflow`, which is a DataLad dataset. Before running `babs init`, we need to create a copy of this, tell `BABS` where to find it, and download some file.
 ```bash
 cd $BABS
 datalad clone https://github.com/templateflow/templateflow.git
 datalad siblings -d "$BABS/templateflow" enable -s public-s3
 export TEMPLATEFLOW_HOME=$BABS/templateflow
+cd $TEMPLATEFLOW_HOME
+datalad get -n *
 ```
 
 ## Run `babs init`
@@ -166,7 +160,7 @@ Make sure `BIDS` is still defined as the datalad BIDS dataset we created in the 
 ```
 
 ```bash
-babs init babs_fmriprep --container_ds $BABS/containers_datalad/fmriprep-container/ --container_name fmriprep-25-1-1 --container_config $BABS/configs/fmriprep-25.1.1.yaml --processing_level subject --queue slurm 
+babs init babs_fmriprep --container_ds $BABS/containers_datalad/fmriprep-container/ --container_name fmriprep-25-0-0 --container_config $BABS/configs/fmriprep-25.0.0.yaml --processing_level subject --queue slurm 
 ```
 
 Let's make sure everything is ready to go by running
