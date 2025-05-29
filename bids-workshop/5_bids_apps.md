@@ -169,7 +169,13 @@ Let's make sure everything is ready to go by running
 ```bash
 babs check-setup $BABS/babs_fmriprep --job_test
 ```
-
+```{warning}
+If you are getting an error that `datalad` cannot be found, you must do the following (I do NOT know why this error occurs for a handful of people):
+1.Find your `$PATH` variable: `echo $PATH`. Copy the output to your clipboard.
+2.Open up a text file for editing: `nano $BABS/babs_fmriprep/analysis/code/participant_job.sh`
+3.Under the line that says `source ${MAMBA_ROOT_PREFIX}/bin/activate workshop`, add a line that says `export PATH=` and then paste the result after `=`. Save the file with (CNTR+O) then exit with (CNTR+X).
+4. `cd $BABS/babs_fmriprep` and then run `babs sync-code` to save the change.
+```
 ### Run a Test Job
 We can submit all the subjects with
 ```bash
