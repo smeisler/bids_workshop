@@ -672,13 +672,7 @@ datalad<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </s
 </details>
 <details>
     <summary>The rest of the code</summary>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-babs_qsiprep<span class="w"> </span><span class="se">\</span>
---container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/qsiprep-container/<span class="w"> </span><span class="se">\</span>
---container_name<span class="w"> </span>qsiprep-1-0-0<span class="w"> </span><span class="se">\</span>
---container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/qsiprep-1.0.0.yaml<span class="w"> </span><span class="se">\</span>
---processing_level<span class="w"> </span>subject<span class="w"> </span><span class="se">\</span>
---queue<span class="w"> </span>slurm
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span>babs_qsiprep<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/qsiprep-container/<span class="w"> </span>--container_name<span class="w"> </span>qsiprep-1-0-0<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/qsiprep-1.0.0.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm
 
 babs<span class="w"> </span>check-setup<span class="w"> </span><span class="nv">$BABS</span>/babs_qsiprep<span class="w"> </span>--job_test
 
