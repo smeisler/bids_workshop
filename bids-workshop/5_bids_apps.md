@@ -171,7 +171,7 @@ babs init babs_fmriprep --container_ds $BABS/containers_datalad/fmriprep-contain
 
 Let's make sure everything is ready to go by running
 ```bash
-babs check-setup --project_root $BABS/babs_fmriprep --job_test
+babs check-setup $BABS/babs_fmriprep --job_test
 ```
 
 ### Run a Test Job
