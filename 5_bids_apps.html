@@ -421,7 +421,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$BABS</s
 <h2>Prepare the Containers<a class="headerlink" href="#prepare-the-containers" title="Link to this heading">#</a></h2>
 <p>I have already built the containers needed for this workshop at <code class="docutils literal notranslate"><span class="pre">${SHARED_DATA_DIR}/containers/</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/
-fmriprep-25.1.1.sif<span class="w">  </span>qsiprep-1.0.1.sif<span class="w">  </span>qsirecon-1.1.0.sif<span class="w">  </span>xcpd-0.10.7.sif
+fmriprep-25.0.0.sif<span class="w">  </span>qsiprep-1.0.1.sif<span class="w">  </span>qsirecon-1.1.0.sif<span class="w">  </span>xcpd-0.10.7.sif
 </pre></div>
 </div>
 <p>We will be version tracking these too, so we need to operate them with DataLad. Let’s create a place for these conatiners to go, and enter that folder:</p>
@@ -432,9 +432,7 @@ fmriprep-25.1.1.sif<span class="w">  </span>qsiprep-1.0.1.sif<span class="w">  <
 <p>For example, for fMRIPrep we can run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;fmriprep container&quot;</span><span class="w"> </span>fmriprep-container
 <span class="nb">cd</span><span class="w"> </span>fmriprep-container
-datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/fmriprep-25.1.1.sif<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>fmriprep-25-1-1
+datalad<span class="w"> </span>containers-add<span class="w"> </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/fmriprep-25.0.0.sif<span class="w"> </span>fmriprep-25-0-0
 <span class="nb">cd</span><span class="w"> </span>../
 </pre></div>
 </div>
@@ -445,23 +443,17 @@ datalad<span class="w"> </span>containers-add<span class="w"> </span><span class
 <p>Do the same for the rest of the containers now.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;qsiprep container&quot;</span><span class="w"> </span>qsiprep-container
 <span class="nb">cd</span><span class="w"> </span>qsiprep-container
-datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/qsiprep-1.0.1.sif<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>qsiprep-1-0-1
+datalad<span class="w"> </span>containers-add<span class="w"> </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/qsiprep-1.0.1.sif<span class="w"> </span>qsiprep-1-0-1
 <span class="nb">cd</span><span class="w"> </span>../
 
 datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;xcpd container&quot;</span><span class="w"> </span>xcpd-container
 <span class="nb">cd</span><span class="w"> </span>xcpd-container
-datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/xcpd-0.10.7.sif<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>xcpd-0-10-7
+datalad<span class="w"> </span>containers-add<span class="w"> </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/xcpd-0.10.7.sif<span class="w"> </span>xcpd-0-10-7
 <span class="nb">cd</span><span class="w"> </span>../
 
 datalad<span class="w"> </span>create<span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;qsirecon container&quot;</span><span class="w"> </span>qsirecon-container
 <span class="nb">cd</span><span class="w"> </span>qsirecon-container
-datalad<span class="w"> </span>containers-add<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/qsirecon-1.1.0.sif<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>qsirecon-1-1-0
+datalad<span class="w"> </span>containers-add<span class="w"> </span>--url<span class="w"> </span><span class="si">${</span><span class="nv">SHARED_DATA_DIR</span><span class="si">}</span>/containers/qsirecon-1.1.0.sif<span class="w"> </span>qsirecon-1-1-0
 <span class="nb">cd</span><span class="w"> </span>../
 </pre></div>
 </div>
@@ -471,7 +463,7 @@ datalad<span class="w"> </span>containers-add<span class="w"> </span><span class
 <p>Now we have to tell <code class="docutils literal notranslate"><span class="pre">BABS</span></code> how we want to run the software. This will be comprehensive, including everything from command line arguments to computational requirements (e.g., memory and CPUs). More documentation about the config file can be found <a class="reference external" href="https://pennlinc-babs.readthedocs.io/en/stable/preparation_config_yaml_file.html#">here</a> and I encourage you to look through it. But for now we can use ones I have created for this workshop. They can be found on the GitHub repo <a class="reference external" href="https://github.com/smeisler/bids_workshop/tree/main/shared_data/babs_files">here</a> and locally at <code class="docutils literal notranslate"><span class="pre">${SHARED_DATA_DIR}/babs_files</span></code>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is an example config yaml file for:</span>
 <span class="c1">#   BIDS App:         fMRIPrep (&quot;fmriprep&quot;)</span>
-<span class="c1">#   BIDS App version: 25.1.1</span>
+<span class="c1">#   BIDS App version: 25.0.0</span>
 <span class="c1">#   Task:             regular use</span>
 <span class="c1">#   Which system:     Slurm</span>
 
@@ -518,7 +510,7 @@ datalad<span class="w"> </span>containers-add<span class="w"> </span><span class
 <span class="c1">#   This fMRIPrep version (25.1.1) generates two folders, &#39;fmriprep&#39; and &#39;freesurfer&#39;.</span>
 <span class="nt">all_results_in_one_zip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="nt">zip_foldernames</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">fmriprep</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;25-1-1&quot;</span><span class="w"> </span><span class="c1"># folder &#39;fmriprep&#39; will be zipped into &#39;sub-xx_(ses-yy_)fmriprep-25-1-1.zip&#39;</span>
+<span class="w">    </span><span class="nt">fmriprep</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;25-0-0&quot;</span><span class="w"> </span><span class="c1"># folder &#39;fmriprep&#39; will be zipped into &#39;sub-xx_(ses-yy_)fmriprep-25-1-1.zip&#39;</span>
 
 <span class="c1"># How much cluster resources it needs:</span>
 <span class="nt">cluster_resources</span><span class="p">:</span>
@@ -554,14 +546,20 @@ datalad<span class="w"> </span>containers-add<span class="w"> </span><span class
 <p class="admonition-title">Warning</p>
 <p>Workshop users will need to change the <code class="docutils literal notranslate"><span class="pre">#SBATCH</span> <span class="pre">--account=PAS2965</span></code> line to match your project code on the OSC. Also, you should change <code class="docutils literal notranslate"><span class="pre">job_compute_space:</span> <span class="pre">&quot;/users/PAS2965/smeisler/workshop/tmp/babs_tmp/fmriprep&quot;</span></code> to a place where you have storage/scratch space.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure that <code class="docutils literal notranslate"><span class="pre">$MAMBA_ROOT_PREFIX</span></code> is defined by running <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">${MAMBA_ROOT_PREFIX}</span></code>. If not defined, it should be defined as ~/miniforge3 if it was installed acccording to Step 0 in this workshop. You can define it with <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">MAMBA_ROOT_PREFIX=&quot;~/miniforge3&quot;</span></code>.</p>
+</div>
 </section>
 <section id="define-templateflow">
 <h2>Define TemplateFlow<a class="headerlink" href="#define-templateflow" title="Link to this heading">#</a></h2>
-<p>Many BIDS-Apps use a centralized collection of brain templates called <a class="reference external" href="https://github.com/templateflow/templateflow">TemplateFlow</a> <span id="id2">[<a class="reference internal" href="bibliography.html#id8" title="Rastko Ciric, William H Thompson, Romy Lorenz, Mathias Goncalves, Eilidh E MacNicol, Christopher J Markiewicz, Yaroslav O Halchenko, Satrajit S Ghosh, Krzysztof J Gorgolewski, Russell A Poldrack, and others. Templateflow: fair-sharing of multi-scale, multi-species brain models. Nature Methods, 19(12):1568–1571, 2022.">Ciric <em>et al.</em>, 2022</a>]</span>, which is a DataLad dataset. Before running <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code>, we need to create a copy of this and tell <code class="docutils literal notranslate"><span class="pre">BABS</span></code> where to find it.</p>
+<p>Many BIDS-Apps use a centralized collection of brain templates called <a class="reference external" href="https://github.com/templateflow/templateflow">TemplateFlow</a> <span id="id2">[<a class="reference internal" href="bibliography.html#id8" title="Rastko Ciric, William H Thompson, Romy Lorenz, Mathias Goncalves, Eilidh E MacNicol, Christopher J Markiewicz, Yaroslav O Halchenko, Satrajit S Ghosh, Krzysztof J Gorgolewski, Russell A Poldrack, and others. Templateflow: fair-sharing of multi-scale, multi-species brain models. Nature Methods, 19(12):1568–1571, 2022.">Ciric <em>et al.</em>, 2022</a>]</span>, which is a DataLad dataset. Before running <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code>, we need to create a copy of this, tell <code class="docutils literal notranslate"><span class="pre">BABS</span></code> where to find it, and download some files.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$BABS</span>
 datalad<span class="w"> </span>clone<span class="w"> </span>https://github.com/templateflow/templateflow.git
 datalad<span class="w"> </span>siblings<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BABS</span><span class="s2">/templateflow&quot;</span><span class="w"> </span><span class="nb">enable</span><span class="w"> </span>-s<span class="w"> </span>public-s3
 <span class="nb">export</span><span class="w"> </span><span class="nv">TEMPLATEFLOW_HOME</span><span class="o">=</span><span class="nv">$BABS</span>/templateflow
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$TEMPLATEFLOW_HOME</span>
+datalad<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>*
 </pre></div>
 </div>
 </section>
@@ -572,17 +570,25 @@ datalad<span class="w"> </span>siblings<span class="w"> </span>-d<span class="w"
 <p class="admonition-title">Note</p>
 <p>Make sure <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> is still defined as the datalad BIDS dataset we created in the previous step!</p>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span>babs_fmriprep<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/fmriprep-container/<span class="w"> </span>--container_name<span class="w"> </span>fmriprep-25-1-1<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/fmriprep-25.1.1.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm<span class="w"> </span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span>babs_fmriprep<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/fmriprep-container/<span class="w"> </span>--container_name<span class="w"> </span>fmriprep-25-0-0<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/fmriprep-25.0.0.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm<span class="w"> </span>
 </pre></div>
 </div>
 <p>Let’s make sure everything is ready to go by running</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>check-setup<span class="w"> </span><span class="nv">$BABS</span>/babs_fmriprep<span class="w"> </span>--job_test
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you are getting an error that <code class="docutils literal notranslate"><span class="pre">datalad</span></code> cannot be found, you must do the following (I do NOT know why this error occurs for a handful of people):
+1.Find your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> variable: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PATH</span></code>. Copy the output to your clipboard.
+2.Open up a text file for editing: <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">$BABS/babs_fmriprep/analysis/code/participant_job.sh</span></code>
+3.Under the line that says <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">${MAMBA_ROOT_PREFIX}/bin/activate</span> <span class="pre">workshop</span></code>, add a line that says <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=</span></code> and then paste the result after <code class="docutils literal notranslate"><span class="pre">=</span></code>. Save the file with (CNTR+O) then exit with (CNTR+X).
+4. <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$BABS/babs_fmriprep</span></code> and then run <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">sync-code</span></code> to save the change.</p>
+</div>
 <section id="run-a-test-job">
 <h3>Run a Test Job<a class="headerlink" href="#run-a-test-job" title="Link to this heading">#</a></h3>
 <p>We can submit all the subjects with</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>submit<span class="w"> </span>--project-root<span class="w"> </span><span class="nv">$BABS</span>/babs_fmriprep
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>submit<span class="w"> </span><span class="nv">$BABS</span>/babs_fmriprep
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -674,7 +680,7 @@ babs_qsiprep<span class="w"> </span><span class="se">\</span>
 
 babs<span class="w"> </span>check-setup<span class="w"> </span><span class="nv">$BABS</span>/babs_qsiprep<span class="w"> </span>--job_test
 
-babs<span class="w"> </span>submit<span class="w"> </span>--project-root<span class="w"> </span><span class="nv">$BABS</span>/babs_qsiprep
+babs<span class="w"> </span>submit<span class="w"> </span><span class="nv">$BABS</span>/babs_qsiprep
 </pre></div>
 </div>
 </details>
