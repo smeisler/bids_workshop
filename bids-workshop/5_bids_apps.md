@@ -141,7 +141,9 @@ alert_log_messages:
 ```{warning}
 Workshop users will need to change the `#SBATCH --account=PAS2965` line to match your project code on the OSC. Also, you should change `job_compute_space: "/users/PAS2965/smeisler/workshop/tmp/babs_tmp/fmriprep"` to a place where you have storage/scratch space.
 ```
-
+```{note}
+Make sure that `$MAMBA_ROOT_PREFIX` is defined by running `echo ${MAMBA_ROOT_PREFIX}`. If not defined, it should be defined as ~/miniforge3 if it was installed acccording to Step 0 in this workshop. You can define it with `export MAMBA_ROOT_PREFIX="~/miniforge3"`.
+```
 ## Define TemplateFlow
 Many BIDS-Apps use a centralized collection of brain templates called [TemplateFlow](https://github.com/templateflow/templateflow) {cite}`ciric2022templateflow`, which is a DataLad dataset. Before running `babs init`, we need to create a copy of this, tell `BABS` where to find it, and download some files.
 ```bash
@@ -171,7 +173,7 @@ babs check-setup $BABS/babs_fmriprep --job_test
 ### Run a Test Job
 We can submit all the subjects with
 ```bash
-babs submit --project-root $BABS/babs_fmriprep
+babs submit $BABS/babs_fmriprep
 ```
 
 ```{warning}
@@ -266,7 +268,7 @@ babs_qsiprep \
 
 babs check-setup $BABS/babs_qsiprep --job_test
 
-babs submit --project-root $BABS/babs_qsiprep
+babs submit $BABS/babs_qsiprep
 ```
 </details>
 
