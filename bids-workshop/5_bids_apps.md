@@ -268,6 +268,8 @@ job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/qsiprep"
     <summary>The rest of the code</summary>
 
 ```bash
+cd $BABS
+
 babs init babs_qsiprep --container_ds $BABS/containers_datalad/qsiprep-container/ --container_name qsiprep-1-0-0 --container_config $BABS/configs/qsiprep-1.0.0.yaml --processing_level subject --queue slurm
 
 babs check-setup $BABS/babs_qsiprep --job_test
