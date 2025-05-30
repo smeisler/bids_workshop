@@ -16,7 +16,7 @@ input_datasets:
 # Files to be copied into the datalad dataset:
 imported_files:
     # Change original_path to the path to the file on your local machine
-    - original_path: "/users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml"
+    - original_path: "/fs/ess/PAS2965/shared_data/babs_files/recon_spec.yaml"
       analysis_path: "code/recon_spec.yaml"
     - original_path: "/users/PAS2965/smeisler/workshop/license.txt"
       analysis_path: "code/license.txt"
