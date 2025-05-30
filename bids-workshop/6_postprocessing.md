@@ -6,7 +6,7 @@ Now we can use our pre-processed data directly as inputs into out postprocessing
 Let's start with QSIRecon. Our `babs init` run will appear similar.
 ```bash
 cd $BABS
-babs init babs_qsirecon --container_ds $BABS/containers_datalad/qsirecon-container/ --container_name qsirecon-1-1-0 --container_config $BABS/configs/qsirecon-1.1.0.yaml --processing_level subject --queue slurm
+babs init babs_qsirecon --container_ds $BABS/containers_datalad/qsirecon-container/ --container_name qsirecon-1-1-0 --container_config $BABS/babs_files/qsirecon-1.1.0.yaml --processing_level subject --queue slurm
 ```
 The YAML is below (and also in GitHub and on the cluster):
 <details>
@@ -31,7 +31,7 @@ input_datasets:
 # Files to be copied into the datalad dataset:
 imported_files:
     # Change original_path to the path to the file on your local machine
-    - original_path: "/users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml"
+    - original_path: "/users/PAS2965/smeisler/workshop/babs/babs_files/recon_spec.yaml"
       analysis_path: "code/recon_spec.yaml"
     - original_path: ""/fs/ess/PAS2965/shared_data/license.txt""
       analysis_path: "code/license.txt"
@@ -51,7 +51,7 @@ bids_app_args:
 singularity_args:
     - --containall
     - --writable-tmpfs
-    - -B /users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml:/code/recon_spec.yaml
+    - -B /users/PAS2965/smeisler/workshop/babs/babs_files/recon_spec.yaml:/code/recon_spec.yaml
 
 # Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):
 #   As qsirecon will use BIDS output layout, we need to ask BABS to create a folder 'qsirecon' to wrap all derivatives:
@@ -253,7 +253,7 @@ When this is all done, we can `babs submit` and `babs merge` just as we did befo
 For completeness, the below code can be used to create your XCP_D BABS object.
 ```bash
 cd $BABS
-babs init babs_xcpd --container_ds $BABS/containers_datalad/xcpd-container/ --container_name xcpd-0-10-7 --container_config $BABS/configs/xcpd-0.10.7.yaml --processing_level subject --queue slurm
+babs init babs_xcpd --container_ds $BABS/containers_datalad/xcpd-container/ --container_name xcpd-0-10-7 --container_config $BABS/babs_files/xcpd-0.10.7.yaml --processing_level subject --queue slurm
 ```
 
 <details>
