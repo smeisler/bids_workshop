@@ -83,7 +83,7 @@ input_datasets:
 # Files to be copied into the datalad dataset:
 imported_files:
     # Change original_path to the path to the file on your local machine
-    - original_path: "/users/PAS2965/smeisler/workshop/license.txt"
+    - original_path: "/fs/ess/PAS2965/shared_data/license.txt"
       analysis_path: "code/license.txt"
 
 # Arguments in `singularity run`:
@@ -216,7 +216,7 @@ input_datasets:
 # Files to be copied into the datalad dataset:
 imported_files:
     # Change original_path to the path to the file on your local machine
-    - original_path: "/users/PAS2965/smeisler/workshop/license.txt"
+    - original_path: "/fs/ess/PAS2965/shared_data/license.txt"
       analysis_path: "code/license.txt"
 
 # Arguments in `singularity run`:
