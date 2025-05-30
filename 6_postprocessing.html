@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/costum.css?v=289ff4cc" />
@@ -403,13 +403,8 @@ document.write(`
 <section id="qsirecon">
 <h2>QSIRecon<a class="headerlink" href="#qsirecon" title="Link to this heading">#</a></h2>
 <p>Let’s start with QSIRecon. Our <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code> run will appear similar.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-babs_qsirecon<span class="w"> </span><span class="se">\</span>
---container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/qsirecon-container/<span class="w"> </span><span class="se">\</span>
---container_name<span class="w"> </span>qsirecon-1-1-0<span class="w"> </span><span class="se">\</span>
---container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/qsirecon-1.1.0.yaml<span class="w"> </span><span class="se">\</span>
---processing_level<span class="w"> </span>subject<span class="w"> </span><span class="se">\</span>
---queue<span class="w"> </span>slurm
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$BABS</span>
+babs<span class="w"> </span>init<span class="w"> </span>babs_qsirecon<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/qsirecon-container/<span class="w"> </span>--container_name<span class="w"> </span>qsirecon-1-1-0<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/qsirecon-1.1.0.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm
 </pre></div>
 </div>
 <p>The YAML is below (and also in GitHub and on the cluster):</p>
@@ -435,7 +430,7 @@ babs_qsirecon<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="c1"># Change original_path to the path to the file on your local machine</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml&quot;</span>
 <span class="w">      </span><span class="nt">analysis_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/recon_spec.yaml&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/workshop/license.txt&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="l l-Scalar l-Scalar-Plain">/fs/ess/PAS2965/shared_data/license.txt&quot;&quot;</span>
 <span class="w">      </span><span class="nt">analysis_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/license.txt&quot;</span>
 
 <span class="c1"># Arguments in `singularity run`:</span>
@@ -650,13 +645,8 @@ babs<span class="w"> </span>sync-code
 <section id="xcp-d">
 <h2>XCP_D<a class="headerlink" href="#xcp-d" title="Link to this heading">#</a></h2>
 <p>For completeness, the below code can be used to create your XCP_D BABS object.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>babs<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
-babs_xcpd<span class="w"> </span><span class="se">\</span>
---container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/xcpd-container/<span class="w"> </span><span class="se">\</span>
---container_name<span class="w"> </span>xcpd-0-10-7<span class="w"> </span><span class="se">\</span>
---container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/xcpd-0.10.7.yaml<span class="w"> </span><span class="se">\</span>
---processing_level<span class="w"> </span>subject<span class="w"> </span><span class="se">\</span>
---queue<span class="w"> </span>slurm
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$BABS</span>
+babs<span class="w"> </span>init<span class="w"> </span>babs_xcpd<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/xcpd-container/<span class="w"> </span>--container_name<span class="w"> </span>xcpd-0-10-7<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/xcpd-0.10.7.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm
 </pre></div>
 </div>
 <details>
@@ -680,7 +670,7 @@ babs_xcpd<span class="w"> </span><span class="se">\</span>
 <span class="c1"># Files to be copied into the datalad dataset:</span>
 <span class="nt">imported_files</span><span class="p">:</span>
 <span class="w">    </span><span class="c1"># Change original_path to the path to the file on your local machine</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/workshop/license.txt&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/fs/ess/PAS2965/shared_data/license.txt&quot;</span>
 <span class="w">      </span><span class="nt">analysis_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/license.txt&quot;</span>
 
 <span class="c1"># Arguments in `singularity run`:</span>

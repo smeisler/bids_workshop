@@ -83,7 +83,7 @@ input_datasets:
 # Files to be copied into the datalad dataset:
 imported_files:
     # Change original_path to the path to the file on your local machine
-    - original_path: "/users/PAS2965/smeisler/workshop/license.txt"
+    - original_path: "/fs/ess/PAS2965/shared_data/license.txt"
       analysis_path: "code/license.txt"
 
 # Arguments in `singularity run`:
@@ -216,7 +216,7 @@ input_datasets:
 # Files to be copied into the datalad dataset:
 imported_files:
     # Change original_path to the path to the file on your local machine
-    - original_path: "/users/PAS2965/smeisler/workshop/license.txt"
+    - original_path: "/fs/ess/PAS2965/shared_data/license.txt"
       analysis_path: "code/license.txt"
 
 # Arguments in `singularity run`:
@@ -268,6 +268,8 @@ job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/qsiprep"
     <summary>The rest of the code</summary>
 
 ```bash
+cd $BABS
+
 babs init babs_qsiprep --container_ds $BABS/containers_datalad/qsiprep-container/ --container_name qsiprep-1-0-0 --container_config $BABS/configs/qsiprep-1.0.0.yaml --processing_level subject --queue slurm
 
 babs check-setup $BABS/babs_qsiprep --job_test
