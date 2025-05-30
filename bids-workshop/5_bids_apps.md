@@ -290,9 +290,7 @@ ls $BABS/babs_fmriprep/merge_ds/
 ```
 and these can be cloned to anywhere with
 ```bash
-datalad clone \
-    ria+file://$BABS/babs_fmriprep/output_ria#~data \
-    /your/outpath
+datalad clone ria+file://$BABS/babs_fmriprep/output_ria#~data $BABS/fmriprep_clone
 ```
 In the directory where you cloned the outputs, you will see the `.zip` files again, but they will just be symlinks you can retrieve the zip files with
 ```bash
