@@ -281,7 +281,7 @@ babs submit $BABS/babs_qsiprep
 ### After Jobs have Finished
 When all the jobs are done, you can create the zip files for all of the outputs by running
 ```bash
-babs merge --project_root $BABS/babs_fmriprep
+babs merge $BABS/babs_fmriprep
 ```
 
 You can now see the zip files with 
