@@ -404,7 +404,7 @@ document.write(`
 <h2>QSIRecon<a class="headerlink" href="#qsirecon" title="Link to this heading">#</a></h2>
 <p>Let’s start with QSIRecon. Our <code class="docutils literal notranslate"><span class="pre">babs</span> <span class="pre">init</span></code> run will appear similar.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$BABS</span>
-babs<span class="w"> </span>init<span class="w"> </span>babs_qsirecon<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/qsirecon-container/<span class="w"> </span>--container_name<span class="w"> </span>qsirecon-1-1-0<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/qsirecon-1.1.0.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm
+babs<span class="w"> </span>init<span class="w"> </span>babs_qsirecon<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/qsirecon-container/<span class="w"> </span>--container_name<span class="w"> </span>qsirecon-1-1-0<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/babs_files/qsirecon-1.1.0.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm
 </pre></div>
 </div>
 <p>The YAML is below (and also in GitHub and on the cluster):</p>
@@ -428,7 +428,7 @@ babs<span class="w"> </span>init<span class="w"> </span>babs_qsirecon<span class
 <span class="c1"># Files to be copied into the datalad dataset:</span>
 <span class="nt">imported_files</span><span class="p">:</span>
 <span class="w">    </span><span class="c1"># Change original_path to the path to the file on your local machine</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/users/PAS2965/smeisler/workshop/babs/babs_files/recon_spec.yaml&quot;</span>
 <span class="w">      </span><span class="nt">analysis_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/recon_spec.yaml&quot;</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">original_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="l l-Scalar l-Scalar-Plain">/fs/ess/PAS2965/shared_data/license.txt&quot;&quot;</span>
 <span class="w">      </span><span class="nt">analysis_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;code/license.txt&quot;</span>
@@ -448,7 +448,7 @@ babs<span class="w"> </span>init<span class="w"> </span>babs_qsirecon<span class
 <span class="nt">singularity_args</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--containall</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--writable-tmpfs</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-B /users/PAS2965/smeisler/workshop/babs/configs/recon_spec.yaml:/code/recon_spec.yaml</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-B /users/PAS2965/smeisler/workshop/babs/babs_files/recon_spec.yaml:/code/recon_spec.yaml</span>
 
 <span class="c1"># Output foldername(s) to be zipped, and the BIDS App version to be included in the zip filename(s):</span>
 <span class="c1">#   As qsirecon will use BIDS output layout, we need to ask BABS to create a folder &#39;qsirecon&#39; to wrap all derivatives:</span>
@@ -646,7 +646,7 @@ babs<span class="w"> </span>sync-code
 <h2>XCP_D<a class="headerlink" href="#xcp-d" title="Link to this heading">#</a></h2>
 <p>For completeness, the below code can be used to create your XCP_D BABS object.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$BABS</span>
-babs<span class="w"> </span>init<span class="w"> </span>babs_xcpd<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/xcpd-container/<span class="w"> </span>--container_name<span class="w"> </span>xcpd-0-10-7<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/configs/xcpd-0.10.7.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm
+babs<span class="w"> </span>init<span class="w"> </span>babs_xcpd<span class="w"> </span>--container_ds<span class="w"> </span><span class="nv">$BABS</span>/containers_datalad/xcpd-container/<span class="w"> </span>--container_name<span class="w"> </span>xcpd-0-10-7<span class="w"> </span>--container_config<span class="w"> </span><span class="nv">$BABS</span>/babs_files/xcpd-0.10.7.yaml<span class="w"> </span>--processing_level<span class="w"> </span>subject<span class="w"> </span>--queue<span class="w"> </span>slurm
 </pre></div>
 </div>
 <details>

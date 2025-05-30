@@ -162,7 +162,7 @@ Make sure `BIDS` is still defined as the datalad BIDS dataset we created in the 
 ```
 
 ```bash
-babs init babs_fmriprep --container_ds $BABS/containers_datalad/fmriprep-container/ --container_name fmriprep-25-0-0 --container_config $BABS/configs/fmriprep-25.0.0.yaml --processing_level subject --queue slurm 
+babs init babs_fmriprep --container_ds $BABS/containers_datalad/fmriprep-container/ --container_name fmriprep-25-0-0 --container_config $BABS/babs_files/fmriprep-25.0.0.yaml --processing_level subject --queue slurm 
 ```
 
 Let's make sure everything is ready to go by running
@@ -270,7 +270,7 @@ job_compute_space: "/fs/scratch/PAS2965/workshop/babs_tmp/qsiprep"
 ```bash
 cd $BABS
 
-babs init babs_qsiprep --container_ds $BABS/containers_datalad/qsiprep-container/ --container_name qsiprep-1-0-0 --container_config $BABS/configs/qsiprep-1.0.0.yaml --processing_level subject --queue slurm
+babs init babs_qsiprep --container_ds $BABS/containers_datalad/qsiprep-container/ --container_name qsiprep-1-0-0 --container_config $BABS/babs_files/qsiprep-1.0.0.yaml --processing_level subject --queue slurm
 
 babs check-setup $BABS/babs_qsiprep --job_test
 
